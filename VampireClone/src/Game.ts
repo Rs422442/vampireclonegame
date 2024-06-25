@@ -20,11 +20,15 @@ export default class Game{
         ])
 
         this.GameLoading.promises[0].then(()=>{
-            let image = AssetManager.getTexture("GG_IDLE", "sabrisv3-1 1.png");
-            let sprite = new PIXI.Sprite(image);
+            //let image = AssetManager.getTexture("GG_IDLE", "sabrisv3-1 1.png");
+            let sprite = new PIXI.Sprite(AssetManager.getTexture("atlas", "block1"));
             this.pixiApp.stage.addChild(sprite);
+            sprite.anchor.set(0.5);
+            sprite.interactive = true;
+            sprite.buttonMode = true;
+            //this.Scene = new StartGame(this.pixiApp, this.GameLoading);
         })    
 
-        //this.Scene = new StartGame(this.pixiApp, this.GameLoading);    
+            
     }
 }
