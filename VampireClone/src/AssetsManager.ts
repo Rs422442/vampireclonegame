@@ -7,7 +7,6 @@ export default class AssetManager{
     static resources: any;
     static assetsloader= new PIXI.Loader;
     promises: Promise<void>[] = [];
-    
 
     constructor(){   
 
