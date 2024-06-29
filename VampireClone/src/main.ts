@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', () =>
     {
       width: window.innerWidth,
       height: window.innerHeight,
-      resizeTo: window
+      resizeTo: window,
+      backgroundColor: 0xFFFFFF
     }); 
 
   document.body.appendChild(_pixiapp.view);
-  new Game(_pixiapp);
+  const newgame = new Game(_pixiapp);
+  newgame.loading(_pixiapp);
 });
-
-  
