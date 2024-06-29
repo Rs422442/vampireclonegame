@@ -4,43 +4,42 @@ import * as PIXI from 'pixi.js';
 type atlassheet = [name: string, path: string]; 
 
 export default class AssetManager{
-    static resources: any;
-    static assetsloader= new PIXI.Loader;
+    resources: any;
+    assetsloader= PIXI.Loader.shared;
     promises: Promise<void>[] = [];
+    Element = document.getElementById('preloader')
 
-    constructor(){   
+    constructor()
+    {   
 
-    }
+    };
 
     async preload(atlas: atlassheet[]): Promise<void> {            
         this.promises.push(
           new Promise<void>((resolve, _reject) =>
-            {
-              atlas.forEach(function(value)
+            {              
+              atlas.forEach((value) =>
               {              
-                AssetManager.assetsloader.add(value[0], value[1])                
-                console.warn('sprites loaded '+ value[0] + ' ' + value[1]);
+                this.assetsloader.add(value[0], value[1]);               
+                console.warn('sprite add '+ value[0] + ' ' + value[1]);
               }); 
 
-              AssetManager.assetsloader.load((_assetsloader, _resources) =>          
+              this.assetsloader.load((_assetsloader, _resources) =>          
               {
-                AssetManager.resources = _resources;
+                this.resources = _resources;
                 console.warn('all sprites loaded');
-                console.warn(AssetManager.resources)
+                console.warn(_resources);
                 resolve();
-              })
-
+              });
             })
-        );
+        ); 
 
-        const Element = document.getElementById('preloader')
-        
         await Promise.all(this.promises)
-          .then((_result) => {Element?.classList.add('preloader--hide'); console.warn('preloader hide')})
+          .then((_result) => {this.Element?.classList.add('preloader--hide'); console.warn('preloader hide')})
           .catch((_err) => console.warn('error loading resources'))
       }
 
-    private static getTextureFromResources(resources: UTILS.Dict<PIXI.ImageResource>, key: string, frame?: string): PIXI.Texture
+    private getTextureFromResources(resources: UTILS.Dict<PIXI.ImageResource>, key: string, frame?: string): PIXI.Texture
       {
         if (frame) 
           {
@@ -65,8 +64,8 @@ export default class AssetManager{
         return (resources[key] as any).texture;
       }
   
-    static getTexture(key: string, frame?: string): PIXI.Texture
+    getTexture(key: string, frame?: string): PIXI.Texture
       {
-        return this.getTextureFromResources(AssetManager.resources, key, frame);
+        return this.getTextureFromResources(this.resources, key, frame);
       }
 };

@@ -7,13 +7,10 @@ export default class Game{
     GameLoading = new AssetManager(); 
     Scene:any;
     renderer = PIXI.autoDetectRenderer();
-    //pixiApp:PIXI.Application;
 
     constructor(_pixiApp:PIXI.Application)
     {
-        //this.loading(_pixiApp);
-
-        //this.Scene = new StartGame(this.pixiApp, this.GameLoading);        
+              
     };
 
     async loading(_pixiApp:PIXI.Application){
@@ -36,7 +33,7 @@ export default class Game{
         graphics.beginFill(0x650A5A);
         graphics.drawRoundedRect(10, 10, 100, 100, 10);
         graphics.endFill();*/
-        let image = AssetManager.getTexture("GG_IDLE", "sabrisv3-1 1.png");
+        let image = this.GameLoading.getTexture("GG_IDLE", "sabrisv3-1 1.png");
         let buttonsprite = new PIXI.Sprite(image); //_pixiApp.renderer.generateTexture(graphics)
         buttonsprite.anchor.set(0.5);
         buttonsprite.scale.set(5);
