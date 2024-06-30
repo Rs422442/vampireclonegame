@@ -115,8 +115,26 @@ export default class Game{
                 ["Coin3_7","./assets/coins/coin3/coins_3_animation_7.png"],
                 ["Coin3_8","./assets/coins/coin3/coins_3_animation_8.png"]
             ]);
+        let coin1_array:string[] = ["Coin1_1","Coin1_2","Coin1_3","Coin1_4","Coin1_5","Coin1_6","Coin1_7","Coin1_8"];
+
+        let coin1sprite = this.animation_sprite_create(_pixiApp,coin1_array,5,window.innerWidth/3, window.innerWidth/5 , true);
         
         this.buttoncreate(_pixiApp,"Start_new_game_buttn", 1,window.innerWidth/2, window.innerWidth/5 , true, true, true);
+    };
+
+    animation_sprite_create(_pixiApp:PIXI.Application, images_array:string[],scale:number,setx:number, sety:number,visible:boolean){
+        let coins1animated = this.createanimations(images_array);
+
+        let Animated_Sprite = new PIXI.AnimatedSprite(coins1animated);
+        Animated_Sprite.anchor.set(0.5);
+        Animated_Sprite.scale.set(scale);
+        Animated_Sprite.visible = visible;
+        Animated_Sprite.x = setx;
+        Animated_Sprite.y = sety;
+        Animated_Sprite.animationSpeed = 0.2;
+        Animated_Sprite.play();
+
+        _pixiApp.stage.addChild(Animated_Sprite);
     };
 
     buttoncreate(_pixiApp:PIXI.Application, key:string, scale:number,setx:number, sety:number, buttonmode: boolean,interactive:boolean,visible:boolean)
@@ -134,8 +152,15 @@ export default class Game{
             console.warn("buttonsprite work");
         });
         _pixiApp.stage.addChild(buttonsprite);
-        console.warn("buttonsprite create");
+        console.warn("buttonsprite create");    
+    };
 
-        
+    createanimations(images_array:string[]):PIXI.Texture[]{
+        let texture_array:PIXI.Texture[] = [];
+        images_array.forEach((image)=>{
+            let texture = PIXI.Texture.from(image);
+            texture_array.push(texture);
+        });
+        return texture_array;
     };
 };
