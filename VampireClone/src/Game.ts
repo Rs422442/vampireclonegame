@@ -16,34 +16,38 @@ export default class Game{
     async loading(_pixiApp:PIXI.Application){
         await this.GameLoading.preload
             ([
-                ["Coins","./assets/Coins.json"],
-                ["Entityatlas","./assets/Entityatlas.json"],
-                ["HealthBar","./assets/HealthBar.json"],
-                ["terrain","./assets/terrain.json"],
-                ["atlas","./assets/atlas.json"],
-                ["GG_IDLE","./assets/GG_IDLE.json"]
+                ["Game_over_buttn","./assets/buttons/button_Game_over.jpg"],
+                ["Pause_buttn","./assets/buttons/button_pause.png"],
+                ["Start_new_game_buttn","./assets/buttons/button_start_game.jpg"],
+                ["Start_buttn","./assets/buttons/button_start.png"],
+                ["Stop_buttn","./assets/buttons/button_stop.png"],
+                ["Salesman_iddle_1","./assets/salesman/salesman_iddle1.png"],
+                ["Salesman_iddle_2","./assets/salesman/salesman_iddle2.png"],
+                ["Salesman_iddle_3","./assets/salesman/salesman_iddle3.png"],
+                ["Salesman_iddle_4","./assets/salesman/salesman_iddle4.png"],
+                ["Salesman_shop_1","./assets/salesman/salesman_shop1.png"],
+                ["Salesman_shop_2","./assets/salesman/salesman_shop2.png"]
+                
             ]);
-        this.buttoncreate(_pixiApp);
+        this.buttoncreate(_pixiApp,"Start_new_game_buttn", 1,window.innerWidth/2, window.innerWidth/5 , true, true, true);
     };
 
-    buttoncreate(_pixiApp:PIXI.Application)
+    buttoncreate(_pixiApp:PIXI.Application, key:string, scale:number,setx:number, sety:number, buttonmode: boolean,interactive:boolean,visible:boolean)
     {
-        /*var graphics = new PIXI.Graphics();
-        graphics.lineStyle(2, 0xff0000, 1);
-        graphics.beginFill(0x650A5A);
-        graphics.drawRoundedRect(10, 10, 100, 100, 10);
-        graphics.endFill();*/
-        let image = this.GameLoading.getTexture("GG_IDLE", "sabrisv3-1 1.png");
-        let buttonsprite = new PIXI.Sprite(image); //_pixiApp.renderer.generateTexture(graphics)
+        let image = this.GameLoading.getTexture(key);
+        let buttonsprite = new PIXI.Sprite(image);
         buttonsprite.anchor.set(0.5);
-        buttonsprite.scale.set(5);
-        buttonsprite.interactive = true;
-        buttonsprite.buttonMode = true;
-        buttonsprite.visible = true;
-        buttonsprite.x = window.innerWidth/2;
-        buttonsprite.y = window.innerWidth/5;
+        buttonsprite.scale.set(scale);
+        buttonsprite.interactive = interactive;
+        buttonsprite.buttonMode = buttonmode;
+        buttonsprite.visible = visible;
+        buttonsprite.x = setx;
+        buttonsprite.y = sety;
+        buttonsprite.on('click',(event)=>{
+            console.warn("buttonsprite create");
+        });
         _pixiApp.stage.addChild(buttonsprite);
 
-        console.warn("sprite create");
+        
     };
 };
