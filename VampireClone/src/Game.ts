@@ -178,7 +178,6 @@ export default class Game{
         });
         _pixiApp.stage.addChild(buttonsprite);
         console.warn("buttonsprite create");
-
     };
 
     /*animation_sprite_create(_pixiApp:PIXI.Application, images_array:string[],scale:number,setx:number, sety:number,visible:boolean){
@@ -194,24 +193,6 @@ export default class Game{
         Animated_Sprite.play();
 
         _pixiApp.stage.addChild(Animated_Sprite);
-    };
-
-    buttoncreate(_pixiApp:PIXI.Application, key:string, scale:number,setx:number, sety:number, buttonmode: boolean,interactive:boolean,visible:boolean)
-    {
-        let image = this.GameLoading.getTexture(key);
-        let buttonsprite = new PIXI.Sprite(image);
-        buttonsprite.anchor.set(0.5);
-        buttonsprite.scale.set(scale);
-        buttonsprite.interactive = interactive;
-        buttonsprite.buttonMode = buttonmode;
-        buttonsprite.visible = visible;
-        buttonsprite.x = setx;
-        buttonsprite.y = sety;
-        buttonsprite.on('click',(event)=>{
-            console.warn("buttonsprite work");
-        });
-        _pixiApp.stage.addChild(buttonsprite);
-        console.warn("buttonsprite create");    
     };*/
 
     createanimations(images_array:string[]):PIXI.Texture[]{
