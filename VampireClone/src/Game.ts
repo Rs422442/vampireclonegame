@@ -7,6 +7,22 @@ export default class Game{
     GameLoading = new AssetManager(); 
     Scene:any;
     renderer = PIXI.autoDetectRenderer();
+    coins1_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    coins2_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    coins3_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    enemy1walk_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    enemy2walk_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    enemy3walk_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    enemy1attack_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    enemy2attack_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    enemy3attack_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    salesmaniddle_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    salesmanshop_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    ggidle_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    ggwalk_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    ggonehand_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    ggtwohand_animated: PIXI.Texture<PIXI.Resource>[] = [];
+    ggspear_animated: PIXI.Texture<PIXI.Resource>[] = [];
 
     constructor(_pixiApp:PIXI.Application)
     {
@@ -116,14 +132,57 @@ export default class Game{
                 ["Coin3_8","./assets/coins/coin3/coins_3_animation_8.png"]
             ]);
         let coin1_array:string[] = ["Coin1_1","Coin1_2","Coin1_3","Coin1_4","Coin1_5","Coin1_6","Coin1_7","Coin1_8"];
+        let coin2_array:string[] = ["Coin2_1","Coin2_2","Coin2_3","Coin2_4","Coin2_5","Coin2_6","Coin2_7","Coin2_8"];
+        let coin3_array:string[] = ["Coin3_1","Coin3_2","Coin3_3","Coin3_4","Coin3_5","Coin3_6","Coin3_7","Coin3_8"];
+        let enemy1_walk:string[] = ["Enemy_1_walk_1","Enemy_1_walk_2","Enemy_1_walk_3","Enemy_1_walk_4"];
+        let enemy1_attack:string[] = ["Enemy_1_attack_1","Enemy_1_attack_2","Enemy_1_attack_3"];
+        let enemy2_walk:string[] = ["Enemy_2_walk_1","Enemy_2_walk_2","Enemy_2_walk_3","Enemy_2_walk_4"];
+        let enemy2_attack:string[] = ["Enemy_2_attack_1","Enemy_2_attack_2","Enemy_2_attack_3"];
+        let enemy3_walk:string[] = ["Enemy_3_walk_1","Enemy_3_walk_2","Enemy_3_walk_3","Enemy_3_walk_4"];
+        let enemy3_attack:string[] = ["Enemy_3_attack_1","Enemy_3_attack_2","Enemy_3_attack_3"];
+        let salesman_iddle:string[] = ["Salesman_iddle_1","Salesman_iddle_2","Salesman_iddle_3","Salesman_iddle_4"];
+        let salesman_shop:string[] = ["Salesman_shop_1","Salesman_shop_1"];
+        let gg_idle:string[] = ["GG_idle_1","GG_idle_2","GG_idle_3","GG_idle_4","GG_idle_5","GG_idle_6","GG_idle_7","GG_idle_8"];
+        let gg_walk:string[] = ["GG_walk_1","GG_walk_2","GG_walk_3","GG_walk_4"];
+        let gg_onehand:string[] = ["GG_onehand_1","GG_onehand_2","GG_onehand_3","GG_onehand_4","GG_onehand_5","GG_onehand_6","GG_onehand_7"];
+        let gg_twohand:string[] = ["GG_twohand_1","GG_twohand_2","GG_twohand_3","GG_twohand_4","GG_twohand_5","GG_twohand_6","GG_twohand_7"];
+        let gg_spear:string[] = ["GG_spear_1","GG_spear_2","GG_spear_3","GG_spear_4","GG_spear_5","GG_spear_6","GG_spear_7"];
 
-        let coin1sprite = this.animation_sprite_create(_pixiApp,coin1_array,5,window.innerWidth/3, window.innerWidth/5 , true);
-        
-        this.buttoncreate(_pixiApp,"Start_new_game_buttn", 1,window.innerWidth/2, window.innerWidth/5 , true, true, true);
+        this.coins1_animated = this.createanimations(coin1_array);
+        this.coins2_animated = this.createanimations(coin2_array);
+        this.coins3_animated = this.createanimations(coin3_array);
+        this.enemy1walk_animated  = this.createanimations(enemy1_walk);
+        this.enemy2walk_animated  = this.createanimations(enemy2_walk);
+        this.enemy3walk_animated  = this.createanimations(enemy3_walk);
+        this.enemy1attack_animated  = this.createanimations(enemy1_attack);
+        this.enemy2attack_animated  = this.createanimations(enemy2_attack);
+        this.enemy3attack_animated  = this.createanimations(enemy3_attack);
+        this.salesmaniddle_animated  = this.createanimations(salesman_iddle);
+        this.salesmanshop_animated  = this.createanimations(salesman_shop);
+        this.ggidle_animated  = this.createanimations(gg_idle);
+        this.ggwalk_animated  = this.createanimations(gg_walk);
+        this.ggonehand_animated  = this.createanimations(gg_onehand);
+        this.ggtwohand_animated  = this.createanimations(gg_twohand);
+        this.ggspear_animated  = this.createanimations(gg_spear);
+
+        let image = this.GameLoading.getTexture("Start_new_game_buttn");
+        let buttonsprite = new PIXI.Sprite(image);
+        buttonsprite.anchor.set(0.5);
+        buttonsprite.scale.set(1);
+        buttonsprite.interactive = true;
+        buttonsprite.buttonMode = true;
+        buttonsprite.x = 1000;
+        buttonsprite.y = window.innerWidth/5;
+        buttonsprite.on('click',(event)=>{
+            console.warn("buttonsprite work");
+        });
+        _pixiApp.stage.addChild(buttonsprite);
+        console.warn("buttonsprite create");
+
     };
 
-    animation_sprite_create(_pixiApp:PIXI.Application, images_array:string[],scale:number,setx:number, sety:number,visible:boolean){
-        let coins1animated = this.createanimations(images_array);
+    /*animation_sprite_create(_pixiApp:PIXI.Application, images_array:string[],scale:number,setx:number, sety:number,visible:boolean){
+        
 
         let Animated_Sprite = new PIXI.AnimatedSprite(coins1animated);
         Animated_Sprite.anchor.set(0.5);
@@ -153,7 +212,7 @@ export default class Game{
         });
         _pixiApp.stage.addChild(buttonsprite);
         console.warn("buttonsprite create");    
-    };
+    };*/
 
     createanimations(images_array:string[]):PIXI.Texture[]{
         let texture_array:PIXI.Texture[] = [];
