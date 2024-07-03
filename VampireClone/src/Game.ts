@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import AssetManager from './AssetsManager.ts';
+import Menu from './scene/Menu_scene.ts';
 
 export default class Game{
 
@@ -131,6 +132,7 @@ export default class Game{
                 ["Coin3_7","./assets/coins/coin3/coins_3_animation_7.png"],
                 ["Coin3_8","./assets/coins/coin3/coins_3_animation_8.png"]
             ]);
+        
         let coin1_array:string[] = ["Coin1_1","Coin1_2","Coin1_3","Coin1_4","Coin1_5","Coin1_6","Coin1_7","Coin1_8"];
         let coin2_array:string[] = ["Coin2_1","Coin2_2","Coin2_3","Coin2_4","Coin2_5","Coin2_6","Coin2_7","Coin2_8"];
         let coin3_array:string[] = ["Coin3_1","Coin3_2","Coin3_3","Coin3_4","Coin3_5","Coin3_6","Coin3_7","Coin3_8"];
@@ -165,19 +167,7 @@ export default class Game{
         this.ggtwohand_animated  = this.createanimations(gg_twohand);
         this.ggspear_animated  = this.createanimations(gg_spear);
 
-        let image = this.GameLoading.getTexture("Start_new_game_buttn");
-        let buttonsprite = new PIXI.Sprite(image);
-        buttonsprite.anchor.set(0.5);
-        buttonsprite.scale.set(1);
-        buttonsprite.interactive = true;
-        buttonsprite.buttonMode = true;
-        buttonsprite.x = 1000;
-        buttonsprite.y = window.innerWidth/5;
-        buttonsprite.on('click',(event)=>{
-            console.warn("buttonsprite work");
-        });
-        _pixiApp.stage.addChild(buttonsprite);
-        console.warn("buttonsprite create");
+        new Menu(_pixiApp,this.GameLoading);
     };
 
     /*animation_sprite_create(_pixiApp:PIXI.Application, images_array:string[],scale:number,setx:number, sety:number,visible:boolean){

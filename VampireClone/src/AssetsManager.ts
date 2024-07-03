@@ -39,7 +39,7 @@ export default class AssetManager{
           .catch((_err) => console.warn('error loading resources'))
       }
 
-    private getTextureFromResources(resources: UTILS.Dict<PIXI.ImageResource>, key: string, frame?: string): PIXI.Texture
+    private getTextureFromResources(resources: UTILS.Dict<PIXI.Texture<PIXI.Resource>>, key: string, frame?: string): PIXI.Texture
       {
         if (frame) 
           {
