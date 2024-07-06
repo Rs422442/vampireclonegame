@@ -167,7 +167,26 @@ export default class Game{
         this.ggtwohand_animated  = this.createanimations(gg_twohand);
         this.ggspear_animated  = this.createanimations(gg_spear);
 
-        new Menu(_pixiApp,this.GameLoading);
+        let animations:PIXI.Texture<PIXI.Resource>[][] = [
+            this.coins1_animated,
+            this.coins2_animated,
+            this.coins3_animated,
+            this.enemy1walk_animated,
+            this.enemy2walk_animated,
+            this.enemy3walk_animated,
+            this.enemy1attack_animated,
+            this.enemy2attack_animated,
+            this.enemy3attack_animated,
+            this.salesmaniddle_animated,
+            this.salesmanshop_animated,
+            this.ggidle_animated,
+            this.ggwalk_animated,
+            this.ggonehand_animated,
+            this.ggtwohand_animated,
+            this.ggspear_animated
+        ];
+
+        new Menu(_pixiApp, this.GameLoading, animations);
     };
 
     /*animation_sprite_create(_pixiApp:PIXI.Application, images_array:string[],scale:number,setx:number, sety:number,visible:boolean){
