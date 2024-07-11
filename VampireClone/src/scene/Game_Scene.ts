@@ -1,12 +1,21 @@
 import * as PIXI from 'pixi.js';
-import * as Game from '../Game.ts';
 import AssetManager from '../AssetsManager.ts';
+import Enemy from '../Entity/Enemy.ts';
+import Game from '../Game.ts';
 
-export default class Game_Scene{
+export default class Game_Scene extends PIXI.Container{
+    //Enemy_array:PIXI.AnimatedSprite[][] | undefined;
 
-    constructor(_pixiApp:PIXI.Application, Assetsload:AssetManager,animations:PIXI.Texture<PIXI.Resource>[][]){
+    constructor(_pixiApp:PIXI.Application, Assetsload:AssetManager){
+
+        super();
         this.Map_Create(_pixiApp, Assetsload);
-        this.Entity_summon(0, 5, animations[3], _pixiApp);
+
+        let enemy = new Enemy(_pixiApp);
+        let Enemy_animations = Game.createanimations(Game.enemy1_walk);
+        enemy.Entity_summon(Enemy_animations, _pixiApp);
+        //this.Enemy_array[0].push(new Enemy)
+        //this.Entity_summon(animations[3], _pixiApp);
     };
 
     Map_Create(_pixiApp:PIXI.Application, Assetsload:AssetManager)
@@ -42,21 +51,5 @@ export default class Game_Scene{
             };
         };
 
-    Entity_summon(Entity_count:number, Entity_min_count:number, Entity_walck_animation:PIXI.Texture<PIXI.Resource>[],_pixiApp:PIXI.Application,)
-    {
-        while (Entity_count <= Entity_min_count) {
-            let x_cor:number = Math.floor(Math.random() * window.innerWidth);
-            let y_cor:number = Math.floor(Math.random() * window.innerHeight);
-            let Entity_sprite = new PIXI.AnimatedSprite(Entity_walck_animation);
-            Entity_sprite.anchor.set(0.5);
-            Entity_sprite.zIndex = 5
-            Entity_sprite.x = x_cor;
-            Entity_sprite.y = y_cor;
-            Entity_sprite.visible = true;
-            Entity_sprite.play;
-            _pixiApp.stage.addChild(Entity_sprite); 
-            Entity_count += 1; 
-            console.log("Entity added");          
-        };
-    };
+    
 };

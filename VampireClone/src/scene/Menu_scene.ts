@@ -5,7 +5,7 @@ import Game_Scene from './Game_Scene.ts';
 export default class Menu{
     
 
-    constructor(_pixiApp:PIXI.Application, Assetsload:AssetManager, animations:PIXI.Texture<PIXI.Resource>[][]){
+    constructor(_pixiApp:PIXI.Application, Assetsload:AssetManager){
 
         let Start_new_Game_buttn_image = Assetsload.getTexture("Start_new_game_buttn");
         let Game_over_buttn_image = Assetsload.getTexture("Game_over_buttn");
@@ -28,8 +28,7 @@ export default class Menu{
             Start_sprite.interactive, Start_sprite.buttonMode, Start_sprite.visible = false;
             Stop_sprite.interactive, Stop_sprite.buttonMode, Stop_sprite.visible = false;
 
-            new Game_Scene(_pixiApp, Assetsload,animations);
-
+            new Game_Scene(_pixiApp, Assetsload);
 
             console.warn("New_Game_sprite work");
         });
