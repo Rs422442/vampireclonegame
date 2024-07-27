@@ -16,21 +16,19 @@ export default class Game_Scene extends PIXI.Container{
         let Enemy3_animations = Game.createanimations(Game.enemy3_walk);
 
         let enemy1 = new Enemy(_pixiApp);
+        let enemy3 = new Enemy(_pixiApp);
+        let enemy2 = new Enemy(_pixiApp);
+        let enemy3_2 = new Enemy(_pixiApp);
         
         enemy1.Entity_summon(Enemy1_animations, _pixiApp);
         enemy1.Entity_walck(_pixiApp);
-
-        let enemy2 = new Enemy(_pixiApp);
-        
+ 
         enemy2.Entity_summon(Enemy2_animations, _pixiApp);
         enemy2.Entity_walck(_pixiApp);
-
-        let enemy3 = new Enemy(_pixiApp);
         
         enemy3.Entity_summon(Enemy3_animations, _pixiApp);
         enemy3.Entity_walck(_pixiApp);
 
-        let enemy3_2 = new Enemy(_pixiApp);
         enemy3_2.Entity_summon(Enemy3_animations, _pixiApp);
         enemy3_2.Entity_walck(_pixiApp);
         //this.Enemy_array[0].push(new Enemy)

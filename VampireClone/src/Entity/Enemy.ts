@@ -4,7 +4,7 @@ export default class Enemy extends PIXI.Container {
 	Entity_sprite!: PIXI.AnimatedSprite;
 	x_cor: number = Math.floor(Math.random() * window.innerWidth);
 	y_cor: number = Math.floor(Math.random() * window.innerHeight);
-	Entity_speed: number = 0.01;
+	Entity_speed: number = 0.005;
 
 	constructor(_pixiApp: PIXI.Application) {
 		super();
@@ -34,13 +34,13 @@ export default class Enemy extends PIXI.Container {
 
 	Entity_walck(_pixiApp: PIXI.Application){
 		let elapsed = 0.0;
-		let last_x_cor = this.x_cor;
+		let last_x_cor = this.Entity_sprite.x;
 		let Entity_direction:number = 0;
 		let t:number = 0;
 		let points:number[][] = [[],[],[],[]];
 		points[0][0] = this.Entity_sprite.x;
 		points[0][1] = this.Entity_sprite.y;
-		for(let i = 1; i < 3; i++){
+		for(let i = 1; i < 4; i++){
 			points[i][0] = Math.floor(Math.random() * window.innerWidth);
 			points[i][1] = Math.floor(Math.random() * window.innerHeight);
 		};
@@ -50,16 +50,18 @@ export default class Enemy extends PIXI.Container {
 			if (t == 0){
 				points[0][0] = this.Entity_sprite.x;
 				points[0][1] = this.Entity_sprite.y;
-				for(let i = 1; i < 3; i++){
+				for(let i = 1; i < 4; i++){
 					points[i][0] = Math.floor(Math.random() * window.innerWidth);
 					points[i][1] = Math.floor(Math.random() * window.innerHeight);
 				};
 			};
+			console.log(t)
+
 			let New_xy_cor = this.get_point(points[0], points[1], points[2], points[3], t)
 			this.Entity_sprite.x = New_xy_cor[0];
 			this.Entity_sprite.y = New_xy_cor[1];
 			
-			if (t == 1){t = 0}
+			if (t >= 1){t = 0}
 			else{t += this.Entity_speed};
 			
 			if (last_x_cor > this.Entity_sprite.x){
