@@ -4,7 +4,10 @@ import Enemy from '../Entity/Enemy.ts';
 import Game from '../Game.ts';
 
 export default class Game_Scene extends PIXI.Container{
-    //Enemy_array:PIXI.AnimatedSprite[][] | undefined;
+    Enemy_array:Enemy[][] = [[],[],[]];
+    enemy1_count:number = 10;
+    enemy2_count: number = 10;
+    enemy3_count: number = 10;
 
     constructor(_pixiApp:PIXI.Application, Assetsload:AssetManager){
 
@@ -15,24 +18,24 @@ export default class Game_Scene extends PIXI.Container{
         let Enemy2_animations = Game.createanimations(Game.enemy2_walk);
         let Enemy3_animations = Game.createanimations(Game.enemy3_walk);
 
-        let enemy1 = new Enemy(_pixiApp);
-        let enemy3 = new Enemy(_pixiApp);
-        let enemy2 = new Enemy(_pixiApp);
-        let enemy3_2 = new Enemy(_pixiApp);
-        
-        enemy1.Entity_summon(Enemy1_animations, _pixiApp);
-        enemy1.Entity_walck(_pixiApp);
- 
-        enemy2.Entity_summon(Enemy2_animations, _pixiApp);
-        enemy2.Entity_walck(_pixiApp);
-        
-        enemy3.Entity_summon(Enemy3_animations, _pixiApp);
-        enemy3.Entity_walck(_pixiApp);
+        for(let i = 0; i <= this.enemy1_count; i++){
+            this.Enemy_array[0].push(new Enemy(_pixiApp))
+            this.Enemy_array[0][i].Entity_summon(Enemy1_animations, _pixiApp);
+            this.Enemy_array[0][i].Entity_walck(_pixiApp);
 
-        enemy3_2.Entity_summon(Enemy3_animations, _pixiApp);
-        enemy3_2.Entity_walck(_pixiApp);
-        //this.Enemy_array[0].push(new Enemy)
-        //this.Entity_summon(animations[3], _pixiApp);
+        };
+
+        for(let i = 0; i <= this.enemy2_count; i++){
+            this.Enemy_array[1].push(new Enemy(_pixiApp))
+            this.Enemy_array[1][i].Entity_summon(Enemy2_animations, _pixiApp);
+            this.Enemy_array[1][i].Entity_walck(_pixiApp);
+        };
+        
+        for(let i = 0; i <= this.enemy3_count; i++){
+            this.Enemy_array[2].push(new Enemy(_pixiApp))
+            this.Enemy_array[2][i].Entity_summon(Enemy3_animations, _pixiApp);
+            this.Enemy_array[2][i].Entity_walck(_pixiApp);
+        };
     };
 
     Map_Create(_pixiApp:PIXI.Application, Assetsload:AssetManager)

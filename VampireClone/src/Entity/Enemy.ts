@@ -4,7 +4,7 @@ export default class Enemy extends PIXI.Container {
 	Entity_sprite!: PIXI.AnimatedSprite;
 	x_cor: number = Math.floor(Math.random() * window.innerWidth);
 	y_cor: number = Math.floor(Math.random() * window.innerHeight);
-	Entity_speed: number = 0.005;
+	Entity_speed: number = 0.001;
 
 	constructor(_pixiApp: PIXI.Application) {
 		super();
@@ -38,26 +38,21 @@ export default class Enemy extends PIXI.Container {
 		let Entity_direction:number = 0;
 		let t:number = 0;
 		let points:number[][] = [[],[],[],[]];
-		points[0][0] = this.Entity_sprite.x;
-		points[0][1] = this.Entity_sprite.y;
-		for(let i = 1; i < 4; i++){
-			points[i][0] = Math.floor(Math.random() * window.innerWidth);
-			points[i][1] = Math.floor(Math.random() * window.innerHeight);
-		};
 		_pixiApp.ticker.add(() => {
 			elapsed += _pixiApp.ticker.deltaTime;
 			console.log(Entity_direction);
-			if (t == 0){
+			if ((t == 0)){
 				points[0][0] = this.Entity_sprite.x;
 				points[0][1] = this.Entity_sprite.y;
-				for(let i = 1; i < 4; i++){
+				for(let i = 1; i <= 3; i++){
 					points[i][0] = Math.floor(Math.random() * window.innerWidth);
 					points[i][1] = Math.floor(Math.random() * window.innerHeight);
 				};
 			};
-			console.log(t)
 
-			let New_xy_cor = this.get_point(points[0], points[1], points[2], points[3], t)
+			//console.log(t)
+
+			let New_xy_cor = this.besie(points[0], points[1], points[2], points[3], t)
 			this.Entity_sprite.x = New_xy_cor[0];
 			this.Entity_sprite.y = New_xy_cor[1];
 			
@@ -87,23 +82,10 @@ export default class Enemy extends PIXI.Container {
 		  });
 	};
 
-	private get_point(p0:number[], p1:number[], p2:number[], p3:number[], t:number) {
-		let p01:number[] = this.Lerp(p0[1], p1[1], p0[0], p1[0], t);
-		let p12:number[] = this.Lerp(p1[1], p2[1], p1[0], p2[0], t);
-		let p23:number[] = this.Lerp(p2[1], p3[1], p2[0], p3[0], t);
-
-		let p012:number[] = this.Lerp(p01[1], p12[1], p01[0], p12[0], t);
-		let p123:number[] = this.Lerp(p12[1], p23[1], p12[0], p23[0], t);
-
-		let p0123:number[] = this.Lerp(p012[1], p123[1], p012[0], p123[0], t);
-
-		return p0123;
-	}
-
-	private Lerp(y1:number, y2:number, x1:number, x2:number, t:number):number[] {
-		let x:number = (t*x2 + x1)/(1 + t);
-		let y:number = y1*(x2 - x)/(x2 - x1) + y2*(x - x1)/(x2 - x1);
-
-		return [x, y];
+	private besie(p0:number[], p1:number[], p2:number[], p3:number[], t:number) {
+		let Point:number[] = [];
+		Point[0] = Math.pow((1 - t), 3)*p0[0] + 3*t*Math.pow((1 - t), 2)*p1[0] + 3*Math.pow(t, 2)*(1-t)*p2[0] + Math.pow(t, 3)*p3[0];
+		Point[1] = Math.pow((1 - t), 3)*p0[1] + 3*t*Math.pow((1 - t), 2)*p1[1] + 3*Math.pow(t, 2)*(1-t)*p2[1] + Math.pow(t, 3)*p3[1];;
+		return Point;
 	}
 }
