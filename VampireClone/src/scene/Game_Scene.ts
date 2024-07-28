@@ -22,17 +22,21 @@ export default class Game_Scene extends PIXI.Container{
             this.Enemy_array[0].push(new Enemy(_pixiApp))
             this.Enemy_array[0][i].Entity_summon(Enemy1_animations, _pixiApp);
             this.Enemy_array[0][i].Entity_walck(_pixiApp);
+            _pixiApp.stage.addChild(this.Enemy_array[0][i]);
+            
 
         };
 
         for(let i = 0; i <= this.enemy2_count; i++){
             this.Enemy_array[1].push(new Enemy(_pixiApp))
+            _pixiApp.stage.addChild(this.Enemy_array[1][i]);
             this.Enemy_array[1][i].Entity_summon(Enemy2_animations, _pixiApp);
             this.Enemy_array[1][i].Entity_walck(_pixiApp);
         };
         
         for(let i = 0; i <= this.enemy3_count; i++){
             this.Enemy_array[2].push(new Enemy(_pixiApp))
+            _pixiApp.stage.addChild(this.Enemy_array[2][i]);
             this.Enemy_array[2][i].Entity_summon(Enemy3_animations, _pixiApp);
             this.Enemy_array[2][i].Entity_walck(_pixiApp);
         };
