@@ -72,7 +72,7 @@ export default class Game_Scene extends PIXI.Container{
         };
 
         _pixiApp.ticker.add(() => {
-            Hero_1.Hero_movement(0.05);
+            Hero_1.Hero_movement(0.01);
             for(let i = 0; i <= this.enemy3_count; i++){
                 this.Enemy_array[0][i].Entity_walck(_pixiApp, this.t);
                 this.Enemy_array[1][i].Entity_walck(_pixiApp, this.t);

@@ -71,8 +71,8 @@ export default class Enemy extends PIXI.Container {
 				this.points[0][0] = super.x;
 				this.points[0][1] = super.y;
 				for(let i = 1; i <= 3; i++){
-					this.points[i][0] = Math.floor(Math.random() * window.innerWidth + 100);
-					this.points[i][1] = Math.floor(Math.random() * window.innerHeight + 100);
+					this.points[i][0] = Math.floor(Math.random() * window.innerWidth + Math.random() * window.innerWidth);
+					this.points[i][1] = Math.floor(Math.random() * window.innerHeight + Math.random() * window.innerHeight);
 				};
 			};
 
