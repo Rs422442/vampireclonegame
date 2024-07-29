@@ -40,9 +40,9 @@ export default class Game {
 
 	async loading(_pixiApp: PIXI.Application) {
 		await Game.GameLoading.preload([
-			["Game_over_buttn", "./assets/buttons/button_Game_over.jpg"],
+			["Game_over_buttn", "./assets/buttons/button_Game_over.jpg"],// поменять на пнг
 			["Pause_buttn", "./assets/buttons/button_pause.png"],
-			["Start_new_game_buttn", "./assets/buttons/button_start_game.jpg"],
+			["Start_new_game_buttn", "./assets/buttons/button_start_game.jpg"], // поменять на пнг
 			["Start_buttn", "./assets/buttons/button_start.png"],
 			["Stop_buttn", "./assets/buttons/button_stop.png"],
 			["Salesman_iddle_1", "./assets/salesman/salesman_idle1.png"],
@@ -143,7 +143,7 @@ export default class Game {
 			["Coin3_5", "./assets/coins/coin3/coins_3_animation_5.png"],
 			["Coin3_6", "./assets/coins/coin3/coins_3_animation_6.png"],
 			["Coin3_7", "./assets/coins/coin3/coins_3_animation_7.png"],
-			["Coin3_8", "./assets/coins/coin3/coins_3_animation_8.png"],
+			["Coin3_8", "./assets/coins/coin3/coins_3_animation_8.png"],// добавить эффекты оружия которые будут наносить урон
 		]);
 
 		Game.coin1_array = [
@@ -257,21 +257,6 @@ export default class Game {
 
 		new Menu(_pixiApp, Game.GameLoading);
 	}
-
-	/*animation_sprite_create(_pixiApp:PIXI.Application, images_array:string[],scale:number,setx:number, sety:number,visible:boolean){
-        
-
-        let Animated_Sprite = new PIXI.AnimatedSprite(coins1animated);
-        Animated_Sprite.anchor.set(0.5);
-        Animated_Sprite.scale.set(scale);
-        Animated_Sprite.visible = visible;
-        Animated_Sprite.x = setx;
-        Animated_Sprite.y = sety;
-        Animated_Sprite.animationSpeed = 0.2;
-        Animated_Sprite.play();
-
-        _pixiApp.stage.addChild(Animated_Sprite);
-    };*/
 
 	static createanimations(images_array: string[]): PIXI.Texture[] {
 		let texture_array: PIXI.Texture[] = [];
