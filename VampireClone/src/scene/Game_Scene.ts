@@ -48,6 +48,7 @@ export default class Game_Scene extends PIXI.Container{
         );
 
         Hero_1.Hero_summon(_pixiApp);
+        Hero_1.Hero_movement(5);
 
         _pixiApp.stage.addChild(Hero_1);
 

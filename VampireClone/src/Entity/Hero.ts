@@ -30,6 +30,7 @@ export default class Hero extends PIXI.Container {
         this.Hero_attack_speare_animations = _Hero_attack_spire_animations;
         this.Hero_walck_animations = _Hero_walck_animations;
         this.Hero_iddle_animations = _Hero_iddle_animations;
+        
     };
 
     Hero_summon(
@@ -71,5 +72,40 @@ export default class Hero extends PIXI.Container {
 		//super.addChild(this.Health_bar_sprite);
 		
 		console.log("Hero added");
+        
 	}
+
+    Hero_movement(Hero_speed:number){
+        document.addEventListener('keydown', (event)=>{
+            console.log(event.keyCode)
+
+            if ((event.keyCode == 37) || (event.keyCode == 65)){
+                console.log("left");
+                this.x -= Hero_speed;
+                this.Hero_sprite.textures = this.Hero_walck_animations;
+            };
+
+            if ((event.keyCode == 38) || (event.keyCode == 87)){
+                console.log("up");
+                this.y -= Hero_speed;
+                this.Hero_sprite.textures = this.Hero_walck_animations;
+            };
+
+            if ((event.keyCode == 39) || (event.keyCode == 68)){
+                console.log("right");
+                this.x += Hero_speed;
+                this.Hero_sprite.textures = this.Hero_walck_animations;
+            };
+
+            if ((event.keyCode == 40) || (event.keyCode == 83)){
+                console.log("down");
+                this.y += Hero_speed;
+                this.Hero_sprite.textures = this.Hero_walck_animations;
+            };
+
+            /*if (((event.keyCode == 37)&&(event.keyCode == 38))||((event.keyCode == 65)&&(event.keyCode == 87))){
+
+            };*/
+        })
+    };
 };

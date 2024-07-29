@@ -20,7 +20,7 @@ export default class Menu{
         New_Game_sprite.buttonMode = true;
         New_Game_sprite.x = window.innerWidth/2;
         New_Game_sprite.y = window.innerHeight/3;
-        New_Game_sprite.on('click',(event)=>{
+        New_Game_sprite.on('click',(_event)=>{
 
             New_Game_sprite.interactive, New_Game_sprite.buttonMode, New_Game_sprite.visible = false;
             Game_over_sprite.interactive, Game_over_sprite.buttonMode,Game_over_sprite.visible = false;
@@ -42,7 +42,7 @@ export default class Menu{
         Game_over_sprite.buttonMode = true;
         Game_over_sprite.x = window.innerWidth/2;
         Game_over_sprite.y = window.innerHeight/3 + 50;
-        Game_over_sprite.on('click',(event)=>{
+        Game_over_sprite.on('click',(_event)=>{
             console.warn("Game_over_sprite work");
         });
         _pixiApp.stage.addChild(Game_over_sprite);
@@ -55,7 +55,7 @@ export default class Menu{
         Pause_sprite .buttonMode = true;
         Pause_sprite .x = window.innerWidth/2;
         Pause_sprite .y = window.innerHeight/3 + 100;
-        Pause_sprite .on('click',(event)=>{
+        Pause_sprite .on('click',(_event)=>{
             console.warn("Pause_sprite  work");
         });
         _pixiApp.stage.addChild(Pause_sprite );
@@ -68,7 +68,7 @@ export default class Menu{
         Start_sprite.buttonMode = true;
         Start_sprite.x = window.innerWidth/2;
         Start_sprite.y = window.innerHeight/3 + 150;
-        Start_sprite.on('click',(event)=>{
+        Start_sprite.on('click',(_event)=>{
             console.warn("Start_sprite work");
         });
         _pixiApp.stage.addChild(Start_sprite);
@@ -81,7 +81,7 @@ export default class Menu{
         Stop_sprite.buttonMode = true;
         Stop_sprite.x = window.innerWidth/2;
         Stop_sprite.y = window.innerHeight/3 + 200;
-        Stop_sprite.on('click',(event)=>{
+        Stop_sprite.on('click',(_event)=>{
             console.warn("Stop_sprite  work");
         });
         _pixiApp.stage.addChild(Stop_sprite);
