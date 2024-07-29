@@ -2,42 +2,73 @@ import * as PIXI from 'pixi.js';
 import AssetManager from '../AssetsManager.ts';
 import Enemy from '../Entity/Enemy.ts';
 import Game from '../Game.ts';
+import Hero from '../Entity/Hero.ts';
 
 export default class Game_Scene extends PIXI.Container{
     Enemy_array:Enemy[][] = [[],[],[]];
-    enemy1_count:number = 10;
-    enemy2_count: number = 10;
-    enemy3_count: number = 10;
+    enemy1_count:number = 3;
+    enemy2_count: number = 3;
+    enemy3_count: number = 3;
 
     constructor(_pixiApp:PIXI.Application, Assetsload:AssetManager){
 
         super();
         this.Map_Create(_pixiApp, Assetsload);
 
-        let Enemy1_animations = Game.createanimations(Game.enemy1_walk);
-        let Enemy2_animations = Game.createanimations(Game.enemy2_walk);
-        let Enemy3_animations = Game.createanimations(Game.enemy3_walk);
+        let Enemy1_walck_animations = Game.createanimations(Game.enemy1_walk);
+        let Enemy2_walck_animations = Game.createanimations(Game.enemy2_walk);
+        let Enemy3_walck_animations = Game.createanimations(Game.enemy3_walk);
+
+        let Enemy1_attack_animations = Game.createanimations(Game.enemy1_walk);
+        let Enemy2_attack_animations = Game.createanimations(Game.enemy2_walk);
+        let Enemy3_attack_animations = Game.createanimations(Game.enemy3_walk);
+
+        let Enemy1_hit_animations = Game.createanimations(Game.enemy1_walk);
+        let Enemy2_hit_animations = Game.createanimations(Game.enemy2_walk);
+        let Enemy3_hit_animations = Game.createanimations(Game.enemy3_walk);
+
+        let Hero_attack_onehand_animations = Game.createanimations(Game.gg_onehand);
+        let Hero_attack_twohand_animations = Game.createanimations(Game.gg_twohand);
+        let Hero_attack_speare_animations = Game.createanimations(Game.gg_spear);
+        let Hero_iddle_animations = Game.createanimations(Game.gg_idle);
+        let Hero_walck_animations = Game.createanimations(Game.gg_walk);
+
+        let Health_bar_image = Game.GameLoading.getTexture("Health_bar");
+        let Hero_Health_bar_foreground_image = Game.GameLoading.getTexture("Health_bar_foreground_1");
+
+        let Hero_1 =new Hero(   
+            _pixiApp,
+            Health_bar_image,
+            Hero_Health_bar_foreground_image,
+            Hero_attack_onehand_animations,
+            Hero_attack_twohand_animations,
+            Hero_attack_speare_animations,
+            Hero_walck_animations,
+            Hero_iddle_animations
+        );
+
+        Hero_1.Hero_summon(_pixiApp);
+
+        _pixiApp.stage.addChild(Hero_1);
 
         for(let i = 0; i <= this.enemy1_count; i++){
-            this.Enemy_array[0].push(new Enemy(_pixiApp))
-            this.Enemy_array[0][i].Entity_summon(Enemy1_animations, _pixiApp);
+            this.Enemy_array[0].push(new Enemy(_pixiApp, Enemy1_walck_animations, Enemy1_attack_animations, Enemy1_hit_animations, Health_bar_image))
+            this.Enemy_array[0][i].Entity_summon();
             this.Enemy_array[0][i].Entity_walck(_pixiApp);
             _pixiApp.stage.addChild(this.Enemy_array[0][i]);
-            
-
         };
 
         for(let i = 0; i <= this.enemy2_count; i++){
-            this.Enemy_array[1].push(new Enemy(_pixiApp))
+            this.Enemy_array[1].push(new Enemy(_pixiApp, Enemy2_walck_animations, Enemy2_attack_animations, Enemy2_hit_animations, Health_bar_image))
             _pixiApp.stage.addChild(this.Enemy_array[1][i]);
-            this.Enemy_array[1][i].Entity_summon(Enemy2_animations, _pixiApp);
+            this.Enemy_array[1][i].Entity_summon();
             this.Enemy_array[1][i].Entity_walck(_pixiApp);
         };
         
         for(let i = 0; i <= this.enemy3_count; i++){
-            this.Enemy_array[2].push(new Enemy(_pixiApp))
+            this.Enemy_array[2].push(new Enemy(_pixiApp, Enemy3_walck_animations, Enemy3_attack_animations, Enemy3_hit_animations, Health_bar_image))
             _pixiApp.stage.addChild(this.Enemy_array[2][i]);
-            this.Enemy_array[2][i].Entity_summon(Enemy3_animations, _pixiApp);
+            this.Enemy_array[2][i].Entity_summon();
             this.Enemy_array[2][i].Entity_walck(_pixiApp);
         };
     };
