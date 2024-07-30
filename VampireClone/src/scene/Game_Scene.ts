@@ -6,10 +6,12 @@ import Hero from '../Entity/Hero.ts';
 
 export default class Game_Scene extends PIXI.Container{
     Enemy_array:Enemy[][] = [[],[],[]];
-    enemy1_count:number = 3;
-    enemy2_count: number = 3;
-    enemy3_count: number = 3;
-    t:number = 0;
+    enemy1_Max_count:number = 3;
+    enemy2_Max_count: number = 3;
+    enemy3_Max_count: number = 3;
+    t1:number = 0;
+    t2:number = 0;
+    t3:number = 0;
 
     constructor(_pixiApp:PIXI.Application, Assetsload:AssetManager){
 
@@ -49,37 +51,43 @@ export default class Game_Scene extends PIXI.Container{
         );
 
         Hero_1.Hero_summon(_pixiApp);
-        
-
         _pixiApp.stage.addChild(Hero_1);
 
-        for(let i = 0; i <= this.enemy1_count; i++){
+        for(let i = 0; i <= this.enemy1_Max_count; i++){
             this.Enemy_array[0].push(new Enemy(_pixiApp, Enemy1_walck_animations, Enemy1_attack_animations, Enemy1_hit_animations, Health_bar_image))
             this.Enemy_array[0][i].Entity_summon();
             _pixiApp.stage.addChild(this.Enemy_array[0][i]);
         };
 
-        for(let i = 0; i <= this.enemy2_count; i++){
+        for(let i = 0; i <= this.enemy2_Max_count; i++){
             this.Enemy_array[1].push(new Enemy(_pixiApp, Enemy2_walck_animations, Enemy2_attack_animations, Enemy2_hit_animations, Health_bar_image))
             _pixiApp.stage.addChild(this.Enemy_array[1][i]);
             this.Enemy_array[1][i].Entity_summon();
         };
         
-        for(let i = 0; i <= this.enemy3_count; i++){
+        for(let i = 0; i <= this.enemy3_Max_count; i++){
             this.Enemy_array[2].push(new Enemy(_pixiApp, Enemy3_walck_animations, Enemy3_attack_animations, Enemy3_hit_animations, Health_bar_image))
             _pixiApp.stage.addChild(this.Enemy_array[2][i]);
             this.Enemy_array[2][i].Entity_summon();
         };
 
-        _pixiApp.ticker.add(() => {
+        _pixiApp.ticker.add(() => {//Придумать как пополнять противников после их смерти
             Hero_1.Hero_movement(0.01);
-            for(let i = 0; i <= this.enemy3_count; i++){
-                this.Enemy_array[0][i].Entity_walck(_pixiApp, this.t);
-                this.Enemy_array[1][i].Entity_walck(_pixiApp, this.t);
-                this.Enemy_array[2][i].Entity_walck(_pixiApp, this.t);
+
+            for(let i = 0; i <= this.enemy3_Max_count; i++){
+                this.Enemy_array[0][i].Entity_walck(_pixiApp, this.t1);
+                this.Enemy_array[1][i].Entity_walck(_pixiApp, this.t2);
+                this.Enemy_array[2][i].Entity_walck(_pixiApp, this.t3);
             };
-            if (this.t >= 1){this.t = 0}
-			else{this.t += Enemy.Entity_speed};
+
+            if (this.t1 >= 1){this.t1 = 0}
+			else{this.t1 += 0.001};
+
+            if (this.t2 >= 1){this.t2 = 0}
+			else{this.t2 += 0.0015};
+
+            if (this.t3 >= 1){this.t3 = 0}
+			else{this.t3 += 0.0017};
         });
     };
 

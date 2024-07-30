@@ -12,6 +12,7 @@ export default class Hero extends PIXI.Container {
     Hero_walck_animations!: PIXI.Texture<PIXI.Resource>[];
     Hero_iddle_animations!: PIXI.Texture<PIXI.Resource>[];
 
+
     constructor(
         _pixiApp: PIXI.Application,
         _Hero_Heath_bar_image:PIXI.Texture<PIXI.Resource>,
@@ -121,10 +122,6 @@ export default class Hero extends PIXI.Container {
             if (this.y > window.innerHeight){
                 this.y = this.y - window.innerHeight;
             };
-
-            /*if (((event.keyCode == 37)&&(event.keyCode == 38))||((event.keyCode == 65)&&(event.keyCode == 87))){
-
-            };*/
         })
     };
 };
