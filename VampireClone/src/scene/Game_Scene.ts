@@ -3,6 +3,7 @@ import AssetManager from '../AssetsManager.ts';
 import Enemy from '../Entity/Enemy.ts';
 import Game from '../Game.ts';
 import Hero from '../Entity/Hero.ts';
+import Shopman from '../Entity/Shopman.ts';
 
 export default class Game_Scene extends PIXI.Container{
     static Enemy_array:Enemy[][] = [[],[],[]];
@@ -19,7 +20,7 @@ export default class Game_Scene extends PIXI.Container{
     constructor(_pixiApp:PIXI.Application, Assetsload:AssetManager){
 
         super();
-        _pixiApp.stage.addChild(this.Map_Create(Assetsload));
+        this.Map_Create(Assetsload);
 
         let Enemy1_walck_animations = Game.createanimations(Game.enemy1_walk);
         let Enemy2_walck_animations = Game.createanimations(Game.enemy2_walk);
@@ -39,6 +40,9 @@ export default class Game_Scene extends PIXI.Container{
         let Hero_iddle_animations = Game.createanimations(Game.gg_idle);
         let Hero_walck_animations = Game.createanimations(Game.gg_walk);
 
+        let Shopman_iddle_animation = Game.createanimations(Game.salesman_iddle);
+        let Shopman_Open_shop_animation = Game.createanimations(Game.salesman_shop);
+
         let Health_bar_image = Game.GameLoading.getTexture("Health_bar");
         let Hero_Health_bar_foreground_image = Game.GameLoading.getTexture("Health_bar_foreground_1");
 
@@ -53,24 +57,31 @@ export default class Game_Scene extends PIXI.Container{
             Hero_iddle_animations
         );
 
-        Hero_1.Hero_summon(_pixiApp);
-        _pixiApp.stage.addChild(Hero_1);
+        let Shopmen_1 = new Shopman(_pixiApp, Shopman_iddle_animation, Shopman_Open_shop_animation);
+
+        Hero_1.Hero_summon();
+        Shopmen_1.Shopman_spawn();
+
+        this.addChild(Hero_1);
+        this.addChild(Shopmen_1);
+
+
 
         for(let i = 0; i <= this.enemy1_Max_count - 1; i++){
             Game_Scene.Enemy_array[0].push(new Enemy(_pixiApp, Enemy1_walck_animations, Enemy1_attack_animations, Enemy1_hit_animations, Health_bar_image))
             Game_Scene.Enemy_array[0][i].Entity_summon();
-            _pixiApp.stage.addChild(Game_Scene.Enemy_array[0][i]);
+            this.addChild(Game_Scene.Enemy_array[0][i]);
         };
 
         for(let i = 0; i <= this.enemy2_Max_count - 1; i++){
             Game_Scene.Enemy_array[1].push(new Enemy(_pixiApp, Enemy2_walck_animations, Enemy2_attack_animations, Enemy2_hit_animations, Health_bar_image))
-            _pixiApp.stage.addChild(Game_Scene.Enemy_array[1][i]);
+            this.addChild(Game_Scene.Enemy_array[1][i]);
             Game_Scene.Enemy_array[1][i].Entity_summon();
         };
         
         for(let i = 0; i <= this.enemy3_Max_count - 1; i++){
             Game_Scene.Enemy_array[2].push(new Enemy(_pixiApp, Enemy3_walck_animations, Enemy3_attack_animations, Enemy3_hit_animations, Health_bar_image))
-            _pixiApp.stage.addChild(Game_Scene.Enemy_array[2][i]);
+            this.addChild(Game_Scene.Enemy_array[2][i]);
             Game_Scene.Enemy_array[2][i].Entity_summon();
         };
 
@@ -78,7 +89,7 @@ export default class Game_Scene extends PIXI.Container{
 
         _pixiApp.ticker.add(() => {//Придумать как пополнять противников после их смерти
             Hero_1.Hero_movement(0.01);
-
+            
             for(let i = 0; i <= this.enemy3_Max_count - 1; i++){
                 Game_Scene.Enemy_array[0][i].Entity_walck(_pixiApp, this.t1);
                 Game_Scene.Enemy_array[1][i].Entity_walck(_pixiApp, this.t2);

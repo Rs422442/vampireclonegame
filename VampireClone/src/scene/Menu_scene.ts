@@ -23,7 +23,7 @@ export default class Menu{
             "Start_new_game_buttn",
             Start_new_Game_buttn_image,
             window.innerWidth/2,
-            window.innerHeight/3,
+            window.innerHeight/2,
             true,
             true,
             true
@@ -81,7 +81,7 @@ export default class Menu{
             Menu.Start_sprite.interactive, Menu.Start_sprite.buttonMode, Menu.Start_sprite.visible = false;
             Menu.Stop_sprite.interactive, Menu.Stop_sprite.buttonMode, Menu.Stop_sprite.visible = false;
 
-            new Game_Scene(_pixiApp, Assetsload);
+            _pixiApp.stage.addChild(new Game_Scene(_pixiApp, Assetsload));
 
             console.log("New_Game_sprite work");
         });

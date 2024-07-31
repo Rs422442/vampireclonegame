@@ -12,6 +12,7 @@ export default class Hero extends PIXI.Container {
     Hero_attack_speare_animations!: PIXI.Texture<PIXI.Resource>[];
     Hero_walck_animations!: PIXI.Texture<PIXI.Resource>[];
     Hero_iddle_animations!: PIXI.Texture<PIXI.Resource>[];
+    Pause_flag:boolean = false;
 
 
     constructor(
@@ -35,9 +36,7 @@ export default class Hero extends PIXI.Container {
         
     };
 
-    Hero_summon(
-        _pixiApp: PIXI.Application
-    ){
+    Hero_summon(){
         this.Hero_sprite = new PIXI.AnimatedSprite(this.Hero_iddle_animations);
 		this.Hero_sprite.anchor.x = 0.5;
 		this.Hero_sprite.anchor.y = 1;
@@ -47,34 +46,29 @@ export default class Hero extends PIXI.Container {
 		this.Hero_sprite.play(); // Это функция, так что её нужно вызвать
 		this.Hero_sprite.animationSpeed = 0.15; // возможно пригодится этот параметр
 
-		this.Hero_Heath_bar_sprite = new PIXI.Sprite(this.Hero_Heath_bar_image);
+        this.Hero_Heath_bar_sprite = new PIXI.Sprite(this.Hero_Heath_bar_image);
 		this.Hero_Heath_bar_sprite.anchor.x = 0.5;
 		this.Hero_Heath_bar_sprite.anchor.y = 1;
-		this.Hero_Heath_bar_sprite.scale.x = 2;
-        this.Hero_Heath_bar_sprite.scale.y = 1;
-		this.Hero_Heath_bar_sprite.x = window.innerWidth/2;
-		this.Hero_Heath_bar_sprite.y = 0 + this.Hero_Heath_bar_sprite.height;
+		this.Hero_Heath_bar_sprite.scale.x = 0.5;
+        this.Hero_Heath_bar_sprite.scale.y = 0.5;
+		this.Hero_Heath_bar_sprite.y = - this.Hero_sprite.height;
 
         this.Hero_Health_bar_foreground_sprite = new PIXI.Sprite(this.Hero_Health_bar_foreground_image);
 		this.Hero_Health_bar_foreground_sprite.anchor.x = 0.5;
 		this.Hero_Health_bar_foreground_sprite.anchor.y = 1;
-		this.Hero_Health_bar_foreground_sprite.scale.x = 2;
-        this.Hero_Health_bar_foreground_sprite.scale.y = 1;
-		this.Hero_Health_bar_foreground_sprite.x = window.innerWidth/2;
-		this.Hero_Health_bar_foreground_sprite.y = 0 + this.Hero_Health_bar_foreground_image.height;
+		this.Hero_Health_bar_foreground_sprite.scale.x = 0.5;
+        this.Hero_Health_bar_foreground_sprite.scale.y = 0.5;
+		this.Hero_Health_bar_foreground_sprite.y = - this.Hero_sprite.height;
 
-		this.width = this.Hero_sprite.width;
-		this.height = this.Hero_sprite.height;
+        this.addChild(this.Hero_Heath_bar_sprite);
+        this.addChild(this.Hero_Health_bar_foreground_sprite);
+
         this.x = window.innerWidth/2;
         this.y = window.innerHeight/2;
 
-		super.addChild(this.Hero_sprite);
-        _pixiApp.stage.addChild(this.Hero_Heath_bar_sprite);
-        _pixiApp.stage.addChild(this.Hero_Health_bar_foreground_sprite);
-		//super.addChild(this.Health_bar_sprite);
+		this.addChild(this.Hero_sprite);
 		
 		console.log("Hero added");
-        
 	}
 
     Hero_event(
@@ -82,14 +76,23 @@ export default class Hero extends PIXI.Container {
         
     ) {
         document.addEventListener('keydown', (event)=>{
-            if (event.keyCode == 27){
+            if ((event.keyCode == 27)&&(this.Pause_flag  == false)){
                 _pixiApp.ticker.stop();
                 console.warn("Paused")
-                Menu.New_Game_sprite.interactive, Menu.New_Game_sprite.buttonMode, Menu.New_Game_sprite.visible = true;
                 Menu.Game_over_sprite.interactive, Menu.Game_over_sprite.buttonMode,Menu.Game_over_sprite.visible = true;
                 Menu.Pause_sprite.interactive, Menu.Pause_sprite.buttonMode, Menu.Pause_sprite.visible = true;
                 Menu.Start_sprite.interactive, Menu.Start_sprite.buttonMode, Menu.Start_sprite.visible = true;
                 Menu.Stop_sprite.interactive, Menu.Stop_sprite.buttonMode, Menu.Stop_sprite.visible = true;
+                this.Pause_flag = true;
+            }
+            else{
+                _pixiApp.ticker.start();
+                console.warn("Started")
+                Menu.Game_over_sprite.interactive, Menu.Game_over_sprite.buttonMode,Menu.Game_over_sprite.visible = false;
+                Menu.Pause_sprite.interactive, Menu.Pause_sprite.buttonMode, Menu.Pause_sprite.visible = false;
+                Menu.Start_sprite.interactive, Menu.Start_sprite.buttonMode, Menu.Start_sprite.visible = false;
+                Menu.Stop_sprite.interactive, Menu.Stop_sprite.buttonMode, Menu.Stop_sprite.visible = false;
+                this.Pause_flag = false;
             };
         });
     };
@@ -103,14 +106,16 @@ export default class Hero extends PIXI.Container {
                 this.x -= Hero_speed;
                 this.Hero_sprite.textures = this.Hero_walck_animations;
                 this.Hero_sprite.scale.x = -1.5;
-                this.Hero_sprite.play()
+                this.Hero_sprite.play();
+                this.Hero_sprite.animationSpeed = 0.15;
             };
 
             if ((event.keyCode == 38) || (event.keyCode == 87)){
                 //console.log("up");
                 this.y -= Hero_speed;
                 this.Hero_sprite.textures = this.Hero_walck_animations;
-                this.Hero_sprite.play()
+                this.Hero_sprite.play();
+                this.Hero_sprite.animationSpeed = 0.15;
             };
 
             if ((event.keyCode == 39) || (event.keyCode == 68)){
@@ -118,14 +123,16 @@ export default class Hero extends PIXI.Container {
                 this.x += Hero_speed;
                 this.Hero_sprite.textures = this.Hero_walck_animations;
                 this.Hero_sprite.scale.x = 1.5;
-                this.Hero_sprite.play()
+                this.Hero_sprite.play();
+                this.Hero_sprite.animationSpeed = 0.15;
             };
 
             if ((event.keyCode == 40) || (event.keyCode == 83)){
                 //console.log("down");
                 this.y += Hero_speed;
                 this.Hero_sprite.textures = this.Hero_walck_animations;
-                this.Hero_sprite.play()
+                this.Hero_sprite.play();
+                this.Hero_sprite.animationSpeed = 0.15;
             };
 
             if (this.x < 0){
