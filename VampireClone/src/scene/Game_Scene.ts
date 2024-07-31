@@ -97,10 +97,11 @@ export default class Game_Scene extends PIXI.Container{
             Game_Scene.Enemy_array[2][i].Entity_summon();
         };
 
-        this.Pause_event(_pixiApp);
+        this.Pause_event(_pixiApp);        
 
         _pixiApp.ticker.add(() => {//Придумать как пополнять противников после их смерти
             Hero_1.Hero_movement(0.01);
+            
             
             for(let i = 0; i <= this.enemy3_Max_count - 1; i++){
                 Game_Scene.Enemy_array[0][i].Entity_walck(_pixiApp, this.t1);
