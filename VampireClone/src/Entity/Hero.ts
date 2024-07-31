@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import Menu from "../scene/Menu_scene";
 
 export default class Hero extends PIXI.Container {
     Hero_sprite!: PIXI.AnimatedSprite;
@@ -76,9 +77,26 @@ export default class Hero extends PIXI.Container {
         
 	}
 
+    Hero_event(
+        _pixiApp:PIXI.Application
+        
+    ) {
+        document.addEventListener('keydown', (event)=>{
+            if (event.keyCode == 27){
+                _pixiApp.ticker.stop();
+                console.warn("Paused")
+                Menu.New_Game_sprite.interactive, Menu.New_Game_sprite.buttonMode, Menu.New_Game_sprite.visible = true;
+                Menu.Game_over_sprite.interactive, Menu.Game_over_sprite.buttonMode,Menu.Game_over_sprite.visible = true;
+                Menu.Pause_sprite.interactive, Menu.Pause_sprite.buttonMode, Menu.Pause_sprite.visible = true;
+                Menu.Start_sprite.interactive, Menu.Start_sprite.buttonMode, Menu.Start_sprite.visible = true;
+                Menu.Stop_sprite.interactive, Menu.Stop_sprite.buttonMode, Menu.Stop_sprite.visible = true;
+            };
+        });
+    };
+
     Hero_movement(Hero_speed:number){
         document.addEventListener('keydown', (event)=>{
-            //console.log(event.keyCode)
+            //console.log(event.keyCode)// энтер 13 ескейп 27
 
             if ((event.keyCode == 37) || (event.keyCode == 65)){
                 //console.log("left");

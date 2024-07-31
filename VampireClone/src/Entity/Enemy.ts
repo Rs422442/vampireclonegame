@@ -4,8 +4,8 @@ export default class Enemy extends PIXI.Container {
 	Entity_sprite!: PIXI.AnimatedSprite;
 	Health_bar_sprite!: PIXI.Sprite;
 	Health_bar_foreground_2_sprite!: PIXI.Sprite;
-	x_cor: number = Math.floor(Math.random() * window.innerWidth/2);
-	y_cor: number = Math.floor(Math.random() * window.innerHeight/2);
+	x_cor: number = Math.floor(Math.random() * window.innerWidth);
+	y_cor: number = Math.floor(Math.random() * window.innerHeight);
 	Enemy_direction:number = 0.5;
 	Entity_walck_animation: PIXI.Texture<PIXI.Resource>[] = [];
 	Entity_attack_animation: PIXI.Texture<PIXI.Resource>[] = [];

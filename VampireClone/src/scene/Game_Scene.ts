@@ -5,10 +5,13 @@ import Game from '../Game.ts';
 import Hero from '../Entity/Hero.ts';
 
 export default class Game_Scene extends PIXI.Container{
-    Enemy_array:Enemy[][] = [[],[],[]];
+    static Enemy_array:Enemy[][] = [[],[],[]];
     enemy1_Max_count:number = 3;
     enemy2_Max_count: number = 3;
     enemy3_Max_count: number = 3;
+    static Enemy1_speed: number = 0.001; 
+    static Enemy2_speed: number = 0.0015; 
+    static Enemy3_speed: number = 0.0017; 
     t1:number = 0;
     t2:number = 0;
     t3:number = 0;
@@ -16,7 +19,7 @@ export default class Game_Scene extends PIXI.Container{
     constructor(_pixiApp:PIXI.Application, Assetsload:AssetManager){
 
         super();
-        this.Map_Create(_pixiApp, Assetsload);
+        _pixiApp.stage.addChild(this.Map_Create(Assetsload));
 
         let Enemy1_walck_animations = Game.createanimations(Game.enemy1_walk);
         let Enemy2_walck_animations = Game.createanimations(Game.enemy2_walk);
@@ -53,45 +56,47 @@ export default class Game_Scene extends PIXI.Container{
         Hero_1.Hero_summon(_pixiApp);
         _pixiApp.stage.addChild(Hero_1);
 
-        for(let i = 0; i <= this.enemy1_Max_count; i++){
-            this.Enemy_array[0].push(new Enemy(_pixiApp, Enemy1_walck_animations, Enemy1_attack_animations, Enemy1_hit_animations, Health_bar_image))
-            this.Enemy_array[0][i].Entity_summon();
-            _pixiApp.stage.addChild(this.Enemy_array[0][i]);
+        for(let i = 0; i <= this.enemy1_Max_count - 1; i++){
+            Game_Scene.Enemy_array[0].push(new Enemy(_pixiApp, Enemy1_walck_animations, Enemy1_attack_animations, Enemy1_hit_animations, Health_bar_image))
+            Game_Scene.Enemy_array[0][i].Entity_summon();
+            _pixiApp.stage.addChild(Game_Scene.Enemy_array[0][i]);
         };
 
-        for(let i = 0; i <= this.enemy2_Max_count; i++){
-            this.Enemy_array[1].push(new Enemy(_pixiApp, Enemy2_walck_animations, Enemy2_attack_animations, Enemy2_hit_animations, Health_bar_image))
-            _pixiApp.stage.addChild(this.Enemy_array[1][i]);
-            this.Enemy_array[1][i].Entity_summon();
+        for(let i = 0; i <= this.enemy2_Max_count - 1; i++){
+            Game_Scene.Enemy_array[1].push(new Enemy(_pixiApp, Enemy2_walck_animations, Enemy2_attack_animations, Enemy2_hit_animations, Health_bar_image))
+            _pixiApp.stage.addChild(Game_Scene.Enemy_array[1][i]);
+            Game_Scene.Enemy_array[1][i].Entity_summon();
         };
         
-        for(let i = 0; i <= this.enemy3_Max_count; i++){
-            this.Enemy_array[2].push(new Enemy(_pixiApp, Enemy3_walck_animations, Enemy3_attack_animations, Enemy3_hit_animations, Health_bar_image))
-            _pixiApp.stage.addChild(this.Enemy_array[2][i]);
-            this.Enemy_array[2][i].Entity_summon();
+        for(let i = 0; i <= this.enemy3_Max_count - 1; i++){
+            Game_Scene.Enemy_array[2].push(new Enemy(_pixiApp, Enemy3_walck_animations, Enemy3_attack_animations, Enemy3_hit_animations, Health_bar_image))
+            _pixiApp.stage.addChild(Game_Scene.Enemy_array[2][i]);
+            Game_Scene.Enemy_array[2][i].Entity_summon();
         };
+
+        Hero_1.Hero_event(_pixiApp);
 
         _pixiApp.ticker.add(() => {//Придумать как пополнять противников после их смерти
             Hero_1.Hero_movement(0.01);
 
-            for(let i = 0; i <= this.enemy3_Max_count; i++){
-                this.Enemy_array[0][i].Entity_walck(_pixiApp, this.t1);
-                this.Enemy_array[1][i].Entity_walck(_pixiApp, this.t2);
-                this.Enemy_array[2][i].Entity_walck(_pixiApp, this.t3);
+            for(let i = 0; i <= this.enemy3_Max_count - 1; i++){
+                Game_Scene.Enemy_array[0][i].Entity_walck(_pixiApp, this.t1);
+                Game_Scene.Enemy_array[1][i].Entity_walck(_pixiApp, this.t2);
+                Game_Scene.Enemy_array[2][i].Entity_walck(_pixiApp, this.t3);
             };
 
             if (this.t1 >= 1){this.t1 = 0}
-			else{this.t1 += 0.001};
+			else{this.t1 += Game_Scene.Enemy1_speed};
 
             if (this.t2 >= 1){this.t2 = 0}
-			else{this.t2 += 0.0015};
+			else{this.t2 += Game_Scene.Enemy1_speed};
 
             if (this.t3 >= 1){this.t3 = 0}
-			else{this.t3 += 0.0017};
+			else{this.t3 += Game_Scene.Enemy1_speed};
         });
     };
 
-    Map_Create(_pixiApp:PIXI.Application, Assetsload:AssetManager)
+    Map_Create(Assetsload:AssetManager):PIXI.Container
         {
             let Terrain_tile_1_image = Assetsload.getTexture("Terrain_1");
             let Terrain_tile_2_image = Assetsload.getTexture("Terrain_2");
@@ -103,6 +108,8 @@ export default class Game_Scene extends PIXI.Container{
             let height: number = 0;
             let width: number = 0;
             let width_step: number = 0;
+            this.width = window.innerWidth;
+            this.height = window.innerHeight;
 
             while (width <= window.innerWidth) {
                 while (height <= window.innerHeight) {
@@ -110,10 +117,10 @@ export default class Game_Scene extends PIXI.Container{
                     let Terrain_sprite = new PIXI.Sprite(Terrain_array[index]);
                     Terrain_sprite.anchor.set(0);
                     Terrain_sprite.width = 30;
-                    Terrain_sprite.zIndex = 1;
+                    //Terrain_sprite.zIndex = 1;
                     Terrain_sprite.x = width;
                     Terrain_sprite.y = Terrain_sprite.height*count;
-                    _pixiApp.stage.addChild(Terrain_sprite);
+                    this.addChild(Terrain_sprite);
                     count += 1;
                     height += Terrain_sprite.height;
                     width_step = Terrain_sprite.width;
@@ -122,7 +129,6 @@ export default class Game_Scene extends PIXI.Container{
                 height = 0;
                 count = 0;
             };
+            return this;
         };
-
-    
 };
