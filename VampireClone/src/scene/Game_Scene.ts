@@ -4,6 +4,7 @@ import Enemy from '../Entity/Enemy.ts';
 import Game from '../Game.ts';
 import Hero from '../Entity/Hero.ts';
 import Shopman from '../Entity/Shopman.ts';
+import Pause from './Pause_Scene.ts';
 
 export default class Game_Scene extends PIXI.Container{
     static Enemy_array:Enemy[][] = [[],[],[]];
@@ -16,11 +17,21 @@ export default class Game_Scene extends PIXI.Container{
     t1:number = 0;
     t2:number = 0;
     t3:number = 0;
+    Game_over_buttn_image!:PIXI.Texture<PIXI.Resource>;
+    Pause_buttn_image!:PIXI.Texture<PIXI.Resource>;
+    Start_buttn_image!:PIXI.Texture<PIXI.Resource>;
+    Stop_buttn_image!:PIXI.Texture<PIXI.Resource>;
+    Pause_flag:boolean = false;
 
     constructor(_pixiApp:PIXI.Application, Assetsload:AssetManager){
 
         super();
         this.Map_Create(Assetsload);
+
+        this.Game_over_buttn_image = Assetsload.getTexture("Game_over_buttn");
+        this.Pause_buttn_image = Assetsload.getTexture("Pause_buttn");
+        this.Start_buttn_image = Assetsload.getTexture("Start_buttn");
+        this.Stop_buttn_image = Assetsload.getTexture("Stop_buttn");
 
         let Enemy1_walck_animations = Game.createanimations(Game.enemy1_walk);
         let Enemy2_walck_animations = Game.createanimations(Game.enemy2_walk);
@@ -48,6 +59,7 @@ export default class Game_Scene extends PIXI.Container{
 
         let Hero_1 =new Hero(   
             _pixiApp,
+            Assetsload,
             Health_bar_image,
             Hero_Health_bar_foreground_image,
             Hero_attack_onehand_animations,
@@ -85,7 +97,7 @@ export default class Game_Scene extends PIXI.Container{
             Game_Scene.Enemy_array[2][i].Entity_summon();
         };
 
-        Hero_1.Hero_event(_pixiApp);
+        this.Pause_event(_pixiApp);
 
         _pixiApp.ticker.add(() => {//Придумать как пополнять противников после их смерти
             Hero_1.Hero_movement(0.01);
@@ -128,7 +140,6 @@ export default class Game_Scene extends PIXI.Container{
                     let Terrain_sprite = new PIXI.Sprite(Terrain_array[index]);
                     Terrain_sprite.anchor.set(0);
                     Terrain_sprite.width = 30;
-                    //Terrain_sprite.zIndex = 1;
                     Terrain_sprite.x = width;
                     Terrain_sprite.y = Terrain_sprite.height*count;
                     this.addChild(Terrain_sprite);
@@ -141,5 +152,25 @@ export default class Game_Scene extends PIXI.Container{
                 count = 0;
             };
             return this;
+        };
+
+        Pause_event(
+            _pixiApp:PIXI.Application 
+        ) {
+            document.addEventListener('keydown', (event)=>{
+                let pause = new Pause(_pixiApp, this.Game_over_buttn_image, this.Pause_buttn_image,this.Start_buttn_image,this.Stop_buttn_image);
+                if ((event.keyCode == 27)&&(this.Pause_flag  == false)){
+                    this.addChild(pause);
+                    _pixiApp.ticker.stop();
+                    console.warn("Paused")
+                    this.Pause_flag = true;
+                }
+                else{
+                    _pixiApp.ticker.start();
+                    console.warn("Started")
+                    this.Pause_flag = false;
+                    this.removeChild(pause);
+                };
+            });
         };
 };

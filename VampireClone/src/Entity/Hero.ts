@@ -1,5 +1,7 @@
 import * as PIXI from "pixi.js";
-import Menu from "../scene/Menu_scene";
+import AssetManager from "../AssetsManager";
+import Pause from "../scene/Pause_Scene";
+
 
 export default class Hero extends PIXI.Container {
     Hero_sprite!: PIXI.AnimatedSprite;
@@ -12,11 +14,12 @@ export default class Hero extends PIXI.Container {
     Hero_attack_speare_animations!: PIXI.Texture<PIXI.Resource>[];
     Hero_walck_animations!: PIXI.Texture<PIXI.Resource>[];
     Hero_iddle_animations!: PIXI.Texture<PIXI.Resource>[];
-    Pause_flag:boolean = false;
+    Assetsloader!:AssetManager;
 
 
     constructor(
         _pixiApp: PIXI.Application,
+        Assetsload:AssetManager,
         _Hero_Heath_bar_image:PIXI.Texture<PIXI.Resource>,
         _Hero_Health_bar_foreground_image:PIXI.Texture<PIXI.Resource>,
         _Hero_attack_onehand_animations: PIXI.Texture<PIXI.Resource>[],
@@ -26,6 +29,7 @@ export default class Hero extends PIXI.Container {
         _Hero_iddle_animations: PIXI.Texture<PIXI.Resource>[],
     ) {
         super();
+        this.Assetsloader = Assetsload;
         this.Hero_Heath_bar_image = _Hero_Heath_bar_image;
         this.Hero_Health_bar_foreground_image = _Hero_Health_bar_foreground_image;
         this.Hero_attack_onehand_animations = _Hero_attack_onehand_animations;
@@ -70,32 +74,6 @@ export default class Hero extends PIXI.Container {
 		
 		console.log("Hero added");
 	}
-
-    Hero_event(
-        _pixiApp:PIXI.Application
-        
-    ) {
-        document.addEventListener('keydown', (event)=>{
-            if ((event.keyCode == 27)&&(this.Pause_flag  == false)){
-                _pixiApp.ticker.stop();
-                console.warn("Paused")
-                Menu.Game_over_sprite.interactive, Menu.Game_over_sprite.buttonMode,Menu.Game_over_sprite.visible = true;
-                Menu.Pause_sprite.interactive, Menu.Pause_sprite.buttonMode, Menu.Pause_sprite.visible = true;
-                Menu.Start_sprite.interactive, Menu.Start_sprite.buttonMode, Menu.Start_sprite.visible = true;
-                Menu.Stop_sprite.interactive, Menu.Stop_sprite.buttonMode, Menu.Stop_sprite.visible = true;
-                this.Pause_flag = true;
-            }
-            else{
-                _pixiApp.ticker.start();
-                console.warn("Started")
-                Menu.Game_over_sprite.interactive, Menu.Game_over_sprite.buttonMode,Menu.Game_over_sprite.visible = false;
-                Menu.Pause_sprite.interactive, Menu.Pause_sprite.buttonMode, Menu.Pause_sprite.visible = false;
-                Menu.Start_sprite.interactive, Menu.Start_sprite.buttonMode, Menu.Start_sprite.visible = false;
-                Menu.Stop_sprite.interactive, Menu.Stop_sprite.buttonMode, Menu.Stop_sprite.visible = false;
-                this.Pause_flag = false;
-            };
-        });
-    };
 
     Hero_movement(Hero_speed:number){
         document.addEventListener('keydown', (event)=>{
