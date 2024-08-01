@@ -22,6 +22,7 @@ export default class Game_Scene extends PIXI.Container{
     Start_buttn_image!:PIXI.Texture<PIXI.Resource>;
     Stop_buttn_image!:PIXI.Texture<PIXI.Resource>;
     Pause_flag:boolean = false;
+    
 
     constructor(_pixiApp:PIXI.Application, Assetsload:AssetManager){
 
@@ -96,11 +97,12 @@ export default class Game_Scene extends PIXI.Container{
             this.addChild(Game_Scene.Enemy_array[2][i]);
             Game_Scene.Enemy_array[2][i].Entity_summon();
         };
+        Hero_1.Hero_movement();
 
-        this.Pause_event(_pixiApp);        
+        //this.Pause_event(_pixiApp);        
 
         _pixiApp.ticker.add(() => {//Придумать как пополнять противников после их смерти
-            Hero_1.Hero_movement(0.01);
+            
             
             
             for(let i = 0; i <= this.enemy3_Max_count - 1; i++){
@@ -155,7 +157,7 @@ export default class Game_Scene extends PIXI.Container{
             return this;
         };
 
-        Pause_event(
+        /*Pause_event(
             _pixiApp:PIXI.Application 
         ) {
             document.addEventListener('keydown', (event)=>{
@@ -173,5 +175,5 @@ export default class Game_Scene extends PIXI.Container{
                     this.removeChild(pause);
                 };
             });
-        };
+        };*/
 };

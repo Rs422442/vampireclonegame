@@ -15,7 +15,8 @@ export default class Hero extends PIXI.Container {
     Hero_walck_animations!: PIXI.Texture<PIXI.Resource>[];
     Hero_iddle_animations!: PIXI.Texture<PIXI.Resource>[];
     Assetsloader!:AssetManager;
-
+    keys = new Map<string, boolean>();
+    
 
     constructor(
         _pixiApp: PIXI.Application,
@@ -75,11 +76,29 @@ export default class Hero extends PIXI.Container {
 		console.log("Hero added");
 	}
 
-    Hero_movement(Hero_speed:number){
-        document.addEventListener('keydown', (event)=>{
-            //console.log(event.keyCode)// энтер 13 ескейп 27
+    Hero_movement(){
+        document.addEventListener('keydown',this.keysdown)
+        document.addEventListener('keyup',this.keysup)
+    };
 
-            if ((event.keyCode == 37) || (event.keyCode == 65)){
+    keysdown(e: { key: string; }){
+        console.log(e.key);
+        let key:string = e.key;
+        this.keys.set(key, true);
+        console.log(this.keys);
+    };
+
+    keysup(e: { key: string; }){
+        console.log(e.key);
+        let key:string = e.key;
+        this.keys.set(key, false);
+        console.log(this.keys);
+    };
+};
+
+//console.log(event.keyCode)// энтер 13 ескейп 27
+
+/* if ((event.keyCode == 37) || (event.keyCode == 65)){
                 //console.log("left");
                 this.x -= Hero_speed;
                 this.Hero_sprite.textures = this.Hero_walck_animations;
@@ -124,7 +143,4 @@ export default class Hero extends PIXI.Container {
             };
             if (this.y > window.innerHeight){
                 this.y = this.y - window.innerHeight;
-            };
-        })
-    };
-};
+            }; */
