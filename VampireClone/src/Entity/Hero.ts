@@ -9,13 +9,9 @@ export default class Hero extends PIXI.Container {
     Hero_Health_bar_foreground_sprite!: PIXI.Sprite;
     Hero_Heath_bar_image!:PIXI.Texture<PIXI.Resource>;
     Hero_Health_bar_foreground_image!:PIXI.Texture<PIXI.Resource>;
-    Hero_attack_onehand_animations!: PIXI.Texture<PIXI.Resource>[];
-    Hero_attack_twohand_animations!: PIXI.Texture<PIXI.Resource>[];
-    Hero_attack_speare_animations!: PIXI.Texture<PIXI.Resource>[];
-    Hero_walck_animations!: PIXI.Texture<PIXI.Resource>[];
-    Hero_iddle_animations!: PIXI.Texture<PIXI.Resource>[];
     Assetsloader!:AssetManager;
     static keys: Map<string, boolean> = new Map<string, boolean>();
+    static animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]>;
     
 
     constructor(
@@ -23,11 +19,7 @@ export default class Hero extends PIXI.Container {
         Assetsload:AssetManager,
         _Hero_Heath_bar_image:PIXI.Texture<PIXI.Resource>,
         _Hero_Health_bar_foreground_image:PIXI.Texture<PIXI.Resource>,
-        _Hero_attack_onehand_animations: PIXI.Texture<PIXI.Resource>[],
-        _Hero_attack_twohand_animations: PIXI.Texture<PIXI.Resource>[],
-        _Hero_attack_spire_animations: PIXI.Texture<PIXI.Resource>[],
-        _Hero_walck_animations: PIXI.Texture<PIXI.Resource>[],
-        _Hero_iddle_animations: PIXI.Texture<PIXI.Resource>[],
+        _animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]>
     ) {
         super();
         
@@ -35,16 +27,14 @@ export default class Hero extends PIXI.Container {
         this.Assetsloader = Assetsload;
         this.Hero_Heath_bar_image = _Hero_Heath_bar_image;
         this.Hero_Health_bar_foreground_image = _Hero_Health_bar_foreground_image;
-        this.Hero_attack_onehand_animations = _Hero_attack_onehand_animations;
-        this.Hero_attack_twohand_animations = _Hero_attack_twohand_animations;
-        this.Hero_attack_speare_animations = _Hero_attack_spire_animations;
-        this.Hero_walck_animations = _Hero_walck_animations;
-        this.Hero_iddle_animations = _Hero_iddle_animations;
-        
+        Hero.animations_map = _animations_map;
     };
 
+    //Escape
+
     Hero_summon(){
-        this.Hero_sprite = new PIXI.AnimatedSprite(this.Hero_iddle_animations);
+        let idle: PIXI.Texture<PIXI.Resource>[] = Hero.animations_map.get("idle")
+        this.Hero_sprite = new PIXI.AnimatedSprite(idle);
 		this.Hero_sprite.anchor.x = 0.5;
 		this.Hero_sprite.anchor.y = 1;
 		this.Hero_sprite.scale.x = 1.5;
@@ -81,20 +71,22 @@ export default class Hero extends PIXI.Container {
     Hero_movement(){
         document.addEventListener('keydown',this.keysdown);
         document.addEventListener('keyup',this.keysup);
-        if (Hero.keys.get("w")){
+        if (Hero.keys.get("w") || Hero.keys.get("ArrowUp") || Hero.keys.get("ц")){
             this.y -= 5;
         };
 
-        if (Hero.keys.get("s")){
+        if (Hero.keys.get("s") || Hero.keys.get("ArrowDown") || Hero.keys.get("ы")){
             this.y += 5;
         };
 
-        if (Hero.keys.get("a")){
+        if (Hero.keys.get("a") || Hero.keys.get("ArrowLeft") || Hero.keys.get("ф")){
             this.x -= 5;
+            this.Hero_sprite.scale.x = -1.5;
         };
 
-        if (Hero.keys.get("d")){
+        if (Hero.keys.get("d") || Hero.keys.get("ArrowRight") || Hero.keys.get("в")){
             this.x += 5;
+            this.Hero_sprite.scale.x = 1.5;
         };
     };
 

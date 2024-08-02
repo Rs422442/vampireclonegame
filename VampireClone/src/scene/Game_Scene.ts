@@ -49,8 +49,8 @@ export default class Game_Scene extends PIXI.Container{
 
         let Hero_attack_onehand_animations = Game.createanimations(Game.gg_onehand);
         let Hero_attack_twohand_animations = Game.createanimations(Game.gg_twohand);
-        let Hero_attack_speare_animations = Game.createanimations(Game.gg_spear);
-        let Hero_iddle_animations = Game.createanimations(Game.gg_idle);
+        let Hero_attack_spear_animations = Game.createanimations(Game.gg_spear);
+        let Hero_idle_animations = Game.createanimations(Game.gg_idle);
         let Hero_walck_animations = Game.createanimations(Game.gg_walk);
 
         let Shopman_iddle_animation = Game.createanimations(Game.salesman_iddle);
@@ -59,16 +59,19 @@ export default class Game_Scene extends PIXI.Container{
         let Health_bar_image = Game.GameLoading.getTexture("Health_bar");
         let Hero_Health_bar_foreground_image = Game.GameLoading.getTexture("Health_bar_foreground_1");
 
+        let Hero_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>()
+        Hero_animations_map.set("onehand", Hero_attack_onehand_animations);
+        Hero_animations_map.set("twohand", Hero_attack_twohand_animations);
+        Hero_animations_map.set("spear", Hero_attack_spear_animations);
+        Hero_animations_map.set("walck", Hero_walck_animations);
+        Hero_animations_map.set("idle", Hero_idle_animations);
+
         this.Hero_entity = new Hero(   
             _pixiApp,
             Assetsload,
             Health_bar_image,
             Hero_Health_bar_foreground_image,
-            Hero_attack_onehand_animations,
-            Hero_attack_twohand_animations,
-            Hero_attack_speare_animations,
-            Hero_walck_animations,
-            Hero_iddle_animations
+            Hero_animations_map
         );
 
         let Shopmen_1 = new Shopman(_pixiApp, Shopman_iddle_animation, Shopman_Open_shop_animation);
