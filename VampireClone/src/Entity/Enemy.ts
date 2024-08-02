@@ -60,7 +60,6 @@ export default class Enemy extends PIXI.Container {
 	}
 
 	Entity_walck(
-		_pixiApp: PIXI.Application,
 		t:number
 	) {
 		//let elapsed:number = 0.0;

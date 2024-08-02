@@ -8,6 +8,7 @@ import Pause from './Pause_Scene.ts';
 
 export default class Game_Scene extends PIXI.Container{
     static Enemy_array:Enemy[][] = [[],[],[]];
+    Hero_entity: Hero;
     enemy1_Max_count:number = 3;
     enemy2_Max_count: number = 3;
     enemy3_Max_count: number = 3;
@@ -58,7 +59,7 @@ export default class Game_Scene extends PIXI.Container{
         let Health_bar_image = Game.GameLoading.getTexture("Health_bar");
         let Hero_Health_bar_foreground_image = Game.GameLoading.getTexture("Health_bar_foreground_1");
 
-        let Hero_1 =new Hero(   
+        this.Hero_entity = new Hero(   
             _pixiApp,
             Assetsload,
             Health_bar_image,
@@ -72,13 +73,11 @@ export default class Game_Scene extends PIXI.Container{
 
         let Shopmen_1 = new Shopman(_pixiApp, Shopman_iddle_animation, Shopman_Open_shop_animation);
 
-        Hero_1.Hero_summon();
+        this.Hero_entity.Hero_summon();
         Shopmen_1.Shopman_spawn();
 
-        this.addChild(Hero_1);
+        this.addChild(this.Hero_entity);
         this.addChild(Shopmen_1);
-
-
 
         for(let i = 0; i <= this.enemy1_Max_count - 1; i++){
             Game_Scene.Enemy_array[0].push(new Enemy(_pixiApp, Enemy1_walck_animations, Enemy1_attack_animations, Enemy1_hit_animations, Health_bar_image))
@@ -97,28 +96,28 @@ export default class Game_Scene extends PIXI.Container{
             this.addChild(Game_Scene.Enemy_array[2][i]);
             Game_Scene.Enemy_array[2][i].Entity_summon();
         };
-        Hero_1.Hero_movement();
+        
+        
 
         //this.Pause_event(_pixiApp);        
 
-        _pixiApp.ticker.add(() => {//Придумать как пополнять противников после их смерти
-            
-            
-            
+        _pixiApp.ticker.add(()=>{
+            this.Hero_entity.Hero_movement();
+        
             for(let i = 0; i <= this.enemy3_Max_count - 1; i++){
-                Game_Scene.Enemy_array[0][i].Entity_walck(_pixiApp, this.t1);
-                Game_Scene.Enemy_array[1][i].Entity_walck(_pixiApp, this.t2);
-                Game_Scene.Enemy_array[2][i].Entity_walck(_pixiApp, this.t3);
+                Game_Scene.Enemy_array[0][i].Entity_walck(this.t1);
+                Game_Scene.Enemy_array[1][i].Entity_walck(this.t2);
+                Game_Scene.Enemy_array[2][i].Entity_walck(this.t3);
             };
 
             if (this.t1 >= 1){this.t1 = 0}
-			else{this.t1 += Game_Scene.Enemy1_speed};
+            else{this.t1 += Game_Scene.Enemy1_speed};
 
             if (this.t2 >= 1){this.t2 = 0}
-			else{this.t2 += Game_Scene.Enemy1_speed};
+            else{this.t2 += Game_Scene.Enemy1_speed};
 
             if (this.t3 >= 1){this.t3 = 0}
-			else{this.t3 += Game_Scene.Enemy1_speed};
+            else{this.t3 += Game_Scene.Enemy1_speed};
         });
     };
 

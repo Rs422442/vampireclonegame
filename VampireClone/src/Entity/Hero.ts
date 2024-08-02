@@ -15,7 +15,7 @@ export default class Hero extends PIXI.Container {
     Hero_walck_animations!: PIXI.Texture<PIXI.Resource>[];
     Hero_iddle_animations!: PIXI.Texture<PIXI.Resource>[];
     Assetsloader!:AssetManager;
-    keys = new Map<string, boolean>();
+    static keys: Map<string, boolean> = new Map<string, boolean>();
     
 
     constructor(
@@ -30,6 +30,8 @@ export default class Hero extends PIXI.Container {
         _Hero_iddle_animations: PIXI.Texture<PIXI.Resource>[],
     ) {
         super();
+        
+        console.log(Hero.keys)
         this.Assetsloader = Assetsload;
         this.Hero_Heath_bar_image = _Hero_Heath_bar_image;
         this.Hero_Health_bar_foreground_image = _Hero_Health_bar_foreground_image;
@@ -77,22 +79,35 @@ export default class Hero extends PIXI.Container {
 	}
 
     Hero_movement(){
-        document.addEventListener('keydown',this.keysdown)
-        document.addEventListener('keyup',this.keysup)
+        document.addEventListener('keydown',this.keysdown);
+        document.addEventListener('keyup',this.keysup);
+        if (Hero.keys.get("w")){
+            this.y -= 5;
+        };
+
+        if (Hero.keys.get("s")){
+            this.y += 5;
+        };
+
+        if (Hero.keys.get("a")){
+            this.x -= 5;
+        };
+
+        if (Hero.keys.get("d")){
+            this.x += 5;
+        };
     };
 
     keysdown(e: { key: string; }){
         console.log(e.key);
-        let key:string = e.key;
-        this.keys.set(key, true);
-        console.log(this.keys);
+        Hero.keys.set(e.key, true);
+        console.log(Hero.keys);
     };
 
     keysup(e: { key: string; }){
         console.log(e.key);
-        let key:string = e.key;
-        this.keys.set(key, false);
-        console.log(this.keys);
+        Hero.keys.set(e.key, false);
+        console.log(Hero.keys);
     };
 };
 
