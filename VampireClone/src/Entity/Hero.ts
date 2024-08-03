@@ -10,6 +10,8 @@ export default class Hero extends PIXI.Container {
     Hero_Heath_bar_image!:PIXI.Texture<PIXI.Resource>;
     Hero_Health_bar_foreground_image!:PIXI.Texture<PIXI.Resource>;
     Assetsloader!:AssetManager;
+    walck_flag:boolean = false;
+    idle_flag:boolean = true;
     static keys: Map<string, boolean> = new Map<string, boolean>();
     static animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]>;
     
@@ -28,9 +30,11 @@ export default class Hero extends PIXI.Container {
         this.Hero_Heath_bar_image = _Hero_Heath_bar_image;
         this.Hero_Health_bar_foreground_image = _Hero_Health_bar_foreground_image;
         Hero.animations_map = _animations_map;
+
+        
     };
 
-    //Escape
+    //Escape Enter
 
     Hero_summon(){
         let idle: PIXI.Texture<PIXI.Resource>[] = Hero.animations_map.get("idle")
@@ -69,6 +73,7 @@ export default class Hero extends PIXI.Container {
 	}
 
     Hero_movement(){
+        let change_flag:boolean = this.walck_flag;
         document.addEventListener('keydown',this.keysdown);
         document.addEventListener('keyup',this.keysup);
         if (Hero.keys.get("w") || Hero.keys.get("ArrowUp") || Hero.keys.get("ц")){
@@ -88,18 +93,53 @@ export default class Hero extends PIXI.Container {
             this.x += 5;
             this.Hero_sprite.scale.x = 1.5;
         };
+
+        if (this.x < 0){
+            this.x = window.innerWidth + this.x;
+        };
+        if (this.x > window.innerWidth){
+            this.x = this.x - window.innerWidth;
+        };
+        if (this.y < 0){
+            this.y = window.innerHeight + this.y;
+        };
+        if (this.y > window.innerHeight){
+            this.y = this.y - window.innerHeight;
+        };
+
+        
+
+        if ((this.walck_flag)&&(!change_flag)){
+            if ((this.walck_flag) && (!this.idle_flag)) {
+                let walck_textures:PIXI.Texture<PIXI.Resource>[]  = Hero.animations_map.get("walck");
+                this.Hero_sprite.textures = walck_textures;
+                this.Hero_sprite.play();
+                this.Hero_sprite.animationSpeed = 0.15;
+            }else{
+                let idle_textures:PIXI.Texture<PIXI.Resource>[] = Hero.animations_map.get("idle");
+                this.Hero_sprite.textures = idle_textures;
+                this.Hero_sprite.play();
+                this.Hero_sprite.animationSpeed = 0.15;
+            };
+        };
     };
 
     keysdown(e: { key: string; }){
         console.log(e.key);
         Hero.keys.set(e.key, true);
         console.log(Hero.keys);
+        this.walck_flag = true;
+        this.idle_flag = false;
+        console.log(this.walck_flag);
     };
 
     keysup(e: { key: string; }){
         console.log(e.key);
         Hero.keys.set(e.key, false);
         console.log(Hero.keys);
+        this.walck_flag = false;
+        this.idle_flag = true;
+        console.log(this.walck_flag);
     };
 };
 
