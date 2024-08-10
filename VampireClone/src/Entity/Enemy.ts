@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import Hero from "./Hero";
 
 export default class Enemy extends PIXI.Container {
 	Entity_sprite!: PIXI.AnimatedSprite;

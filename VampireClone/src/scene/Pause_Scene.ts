@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import Menu_scene from './Menu_scene.ts';
+import Game from '../Game.ts';
 
 export default class Pause extends PIXI.Container{
     static Pause_sprite:PIXI.Sprite;
@@ -9,19 +10,18 @@ export default class Pause extends PIXI.Container{
     
 
     constructor(
-        _pixiApp:PIXI.Application,
-        Game_over_buttn_image:PIXI.Texture<PIXI.Resource>,
-        Pause_buttn_image:PIXI.Texture<PIXI.Resource>,
-        Start_buttn_image:PIXI.Texture<PIXI.Resource>,
-        Stop_buttn_image:PIXI.Texture<PIXI.Resource>,
+        _pixiApp: PIXI.Application
     ) {
 
         super();
 
+        _pixiApp.ticker.stop();
+        console.warn("Paused")
+
         Pause.Game_over_sprite = Menu_scene.Create_Menu_button(
             this,
             "Game_over_buttn",
-            Game_over_buttn_image,
+            Game.button_image_map.get("Game_over_buttn"),
             window.innerWidth/2,
             window.innerHeight/3 + 150,
             true,
@@ -32,7 +32,7 @@ export default class Pause extends PIXI.Container{
         /*Pause.Pause_sprite = Menu_scene.Create_Menu_button(
             this,
             "Pause_buttn",
-            Pause_buttn_image,
+            Game.button_image_map.get("Pause_buttn"),
             window.innerWidth/2,
             window.innerHeight/3 + 50,
             true,
@@ -43,7 +43,7 @@ export default class Pause extends PIXI.Container{
         Pause.Start_sprite = Menu_scene.Create_Menu_button(
             this,
             "Start_buttn",
-            Start_buttn_image,
+            Game.button_image_map.get("Start_buttn"),
             window.innerWidth/2,
             window.innerHeight/3 + 50,
             true,
@@ -54,7 +54,7 @@ export default class Pause extends PIXI.Container{
         Pause.Stop_sprite = Menu_scene.Create_Menu_button(
             this,
             "Stop_button",
-            Stop_buttn_image,
+            Game.button_image_map.get("Stop_buttn"),
             window.innerWidth/2,
             window.innerHeight/3 + 100,
             true,

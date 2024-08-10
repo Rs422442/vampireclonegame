@@ -25,6 +25,7 @@ export default class Game {
 	static gg_onehand: string[] = [];
 	static gg_twohand: string[] = [];
 	static gg_spear: string[] = [];
+	static button_image_map: Map<string, PIXI.Texture<PIXI.Resource>> = new Map<string, PIXI.Texture<PIXI.Resource>>()
 
 	constructor(_pixiApp: PIXI.Application) {}
 
@@ -145,6 +146,12 @@ export default class Game {
 			["Coin3_7", "./assets/coins/coin3/coins_3_animation_7.png"],
 			["Coin3_8", "./assets/coins/coin3/coins_3_animation_8.png"],// добавить эффекты оружия которые будут наносить урон
 		]);
+
+		Game.button_image_map.set("Start_new_game_buttn",Game.GameLoading.getTexture("Start_new_game_buttn"));
+		Game.button_image_map.set("Game_over_buttn",Game.GameLoading.getTexture("Game_over_buttn"));
+		Game.button_image_map.set("Pause_buttn",Game.GameLoading.getTexture("Pause_buttn"));
+		Game.button_image_map.set("Start_buttn",Game.GameLoading.getTexture("Start_buttn"));
+		Game.button_image_map.set("Stop_buttn",Game.GameLoading.getTexture("Stop_buttn"));
 
 		Game.coin1_array = [
 			"Coin1_1",

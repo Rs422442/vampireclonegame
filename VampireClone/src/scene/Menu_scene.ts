@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import AssetManager from '../AssetsManager.ts';
 import Game_Scene from './Game_Scene.ts';
+import Game from '../Game.ts';
 
 export default class Menu extends PIXI.Container{
     static New_Game_sprite:PIXI.Sprite;    
@@ -9,12 +10,10 @@ export default class Menu extends PIXI.Container{
 
         super();
 
-        let Start_new_Game_buttn_image = Assetsload.getTexture("Start_new_game_buttn");
-
         Menu.New_Game_sprite = Menu.Create_Menu_button(
             this,
             "Start_new_game_buttn",
-            Start_new_Game_buttn_image,
+            Game.button_image_map.get("Start_new_game_buttn"),
             window.innerWidth/2,
             window.innerHeight/2,
             true,

@@ -111,6 +111,10 @@ export default class Game_Scene extends PIXI.Container{
                 Game_Scene.Enemy_array[2][i].Entity_walck(this.t3);
             };
 
+            if (Hero.keys.get("Escape")){
+                this.addChild(new Pause(_pixiApp));
+            };
+
             if (this.t1 >= 1){this.t1 = 0}
             else{this.t1 += Game_Scene.Enemy1_speed};
 

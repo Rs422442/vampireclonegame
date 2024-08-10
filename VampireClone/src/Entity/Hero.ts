@@ -15,7 +15,6 @@ export default class Hero extends PIXI.Container {
     idle_flag:boolean = true;
     static keys: Map<string, boolean> = new Map<string, boolean>();
     static animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]>;
-    
 
     constructor(
         _pixiApp: PIXI.Application,
@@ -104,21 +103,22 @@ export default class Hero extends PIXI.Container {
             this.y = this.y - window.innerHeight;
         };
 
-        
 
-        if ((this.walck_flag)&&(!change_flag)){
-            if ((this.walck_flag) && (!this.idle_flag)) {
-                let walck_textures:PIXI.Texture<PIXI.Resource>[]  = Game_Scene.Hero_animations_map.get("walk");
-                this.Hero_sprite.textures = walck_textures;
-                this.Hero_sprite.play();
-                this.Hero_sprite.animationSpeed = 0.15;
-            }else{
-                let idle_textures:PIXI.Texture<PIXI.Resource>[] = Game_Scene.Hero_animations_map.get("idle");
-                this.Hero_sprite.textures = idle_textures;
-                this.Hero_sprite.play();
-                this.Hero_sprite.animationSpeed = 0.15;
-            };
+        if (this.walck_flag) {
+            let walck_textures:PIXI.Texture<PIXI.Resource>[]  = Game_Scene.Hero_animations_map.get("walk");
+            this.Hero_sprite.textures = walck_textures;
+            this.Hero_sprite.play();
+            this.Hero_sprite.animationSpeed = 0.15;
+        }else{
+            let idle_textures:PIXI.Texture<PIXI.Resource>[] = Game_Scene.Hero_animations_map.get("idle");
+            this.Hero_sprite.textures = idle_textures;
+            this.Hero_sprite.play();
+            this.Hero_sprite.animationSpeed = 0.15;
         };
+    };
+
+    Hero_attack(){
+
     };
 
     keysdown(e: { key: string; }){
@@ -139,52 +139,3 @@ export default class Hero extends PIXI.Container {
         console.log(this.walck_flag);
     };
 };
-
-//console.log(event.keyCode)// энтер 13 ескейп 27
-
-/* if ((event.keyCode == 37) || (event.keyCode == 65)){
-                //console.log("left");
-                this.x -= Hero_speed;
-                this.Hero_sprite.textures = this.Hero_walck_animations;
-                this.Hero_sprite.scale.x = -1.5;
-                this.Hero_sprite.play();
-                this.Hero_sprite.animationSpeed = 0.15;
-            };
-
-            if ((event.keyCode == 38) || (event.keyCode == 87)){
-                //console.log("up");
-                this.y -= Hero_speed;
-                this.Hero_sprite.textures = this.Hero_walck_animations;
-                this.Hero_sprite.play();
-                this.Hero_sprite.animationSpeed = 0.15;
-            };
-
-            if ((event.keyCode == 39) || (event.keyCode == 68)){
-                //console.log("right");
-                this.x += Hero_speed;
-                this.Hero_sprite.textures = this.Hero_walck_animations;
-                this.Hero_sprite.scale.x = 1.5;
-                this.Hero_sprite.play();
-                this.Hero_sprite.animationSpeed = 0.15;
-            };
-
-            if ((event.keyCode == 40) || (event.keyCode == 83)){
-                //console.log("down");
-                this.y += Hero_speed;
-                this.Hero_sprite.textures = this.Hero_walck_animations;
-                this.Hero_sprite.play();
-                this.Hero_sprite.animationSpeed = 0.15;
-            };
-
-            if (this.x < 0){
-                this.x = window.innerWidth + this.x;
-            };
-            if (this.x > window.innerWidth){
-                this.x = this.x - window.innerWidth;
-            };
-            if (this.y < 0){
-                this.y = window.innerHeight + this.y;
-            };
-            if (this.y > window.innerHeight){
-                this.y = this.y - window.innerHeight;
-            }; */
