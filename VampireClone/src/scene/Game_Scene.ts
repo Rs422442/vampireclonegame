@@ -23,6 +23,10 @@ export default class Game_Scene extends PIXI.Container{
     Start_buttn_image!:PIXI.Texture<PIXI.Resource>;
     Stop_buttn_image!:PIXI.Texture<PIXI.Resource>;
     Pause_flag:boolean = false;
+    static Enemy1_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>()
+    static Enemy2_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>()
+    static Enemy3_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>()
+    static Hero_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>()
     
 
     constructor(_pixiApp:PIXI.Application, Assetsload:AssetManager){
@@ -35,43 +39,37 @@ export default class Game_Scene extends PIXI.Container{
         this.Start_buttn_image = Assetsload.getTexture("Start_buttn");
         this.Stop_buttn_image = Assetsload.getTexture("Stop_buttn");
 
-        let Enemy1_walck_animations = Game.createanimations(Game.enemy1_walk);
-        let Enemy2_walck_animations = Game.createanimations(Game.enemy2_walk);
-        let Enemy3_walck_animations = Game.createanimations(Game.enemy3_walk);
-
-        let Enemy1_attack_animations = Game.createanimations(Game.enemy1_walk);
-        let Enemy2_attack_animations = Game.createanimations(Game.enemy2_walk);
-        let Enemy3_attack_animations = Game.createanimations(Game.enemy3_walk);
-
-        let Enemy1_hit_animations = Game.createanimations(Game.enemy1_walk);
-        let Enemy2_hit_animations = Game.createanimations(Game.enemy2_walk);
-        let Enemy3_hit_animations = Game.createanimations(Game.enemy3_walk);
-
-        let Hero_attack_onehand_animations = Game.createanimations(Game.gg_onehand);
-        let Hero_attack_twohand_animations = Game.createanimations(Game.gg_twohand);
-        let Hero_attack_spear_animations = Game.createanimations(Game.gg_spear);
-        let Hero_idle_animations = Game.createanimations(Game.gg_idle);
-        let Hero_walck_animations = Game.createanimations(Game.gg_walk);
-
         let Shopman_iddle_animation = Game.createanimations(Game.salesman_iddle);
         let Shopman_Open_shop_animation = Game.createanimations(Game.salesman_shop);
 
         let Health_bar_image = Game.GameLoading.getTexture("Health_bar");
         let Hero_Health_bar_foreground_image = Game.GameLoading.getTexture("Health_bar_foreground_1");
 
-        let Hero_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>()
-        Hero_animations_map.set("onehand", Hero_attack_onehand_animations);
-        Hero_animations_map.set("twohand", Hero_attack_twohand_animations);
-        Hero_animations_map.set("spear", Hero_attack_spear_animations);
-        Hero_animations_map.set("walck", Hero_walck_animations);
-        Hero_animations_map.set("idle", Hero_idle_animations);
+        
+        Game_Scene.Enemy1_animations_map.set("walk", Game.createanimations(Game.enemy1_walk));
+        Game_Scene.Enemy1_animations_map.set("attack", Game.createanimations(Game.enemy1_walk));
+        Game_Scene.Enemy1_animations_map.set("hit", Game.createanimations(Game.enemy1_walk));
+
+        Game_Scene.Enemy2_animations_map.set("walk", Game.createanimations(Game.enemy2_walk));
+        Game_Scene.Enemy2_animations_map.set("attack", Game.createanimations(Game.enemy2_walk));
+        Game_Scene.Enemy2_animations_map.set("hit", Game.createanimations(Game.enemy2_walk));
+
+        Game_Scene.Enemy3_animations_map.set("walk", Game.createanimations(Game.enemy3_walk));
+        Game_Scene.Enemy3_animations_map.set("attack", Game.createanimations(Game.enemy3_walk));
+        Game_Scene.Enemy3_animations_map.set("hit", Game.createanimations(Game.enemy3_walk));
+
+        
+        Game_Scene.Hero_animations_map.set("onehand", Game.createanimations(Game.gg_onehand));
+        Game_Scene.Hero_animations_map.set("twohand", Game.createanimations(Game.gg_twohand));
+        Game_Scene.Hero_animations_map.set("spear", Game.createanimations(Game.gg_spear));
+        Game_Scene.Hero_animations_map.set("walk", Game.createanimations(Game.gg_walk));
+        Game_Scene.Hero_animations_map.set("idle", Game.createanimations(Game.gg_idle));
 
         this.Hero_entity = new Hero(   
             _pixiApp,
             Assetsload,
             Health_bar_image,
             Hero_Health_bar_foreground_image,
-            Hero_animations_map
         );
 
         let Shopmen_1 = new Shopman(_pixiApp, Shopman_iddle_animation, Shopman_Open_shop_animation);
@@ -83,19 +81,19 @@ export default class Game_Scene extends PIXI.Container{
         this.addChild(Shopmen_1);
 
         for(let i = 0; i <= this.enemy1_Max_count - 1; i++){
-            Game_Scene.Enemy_array[0].push(new Enemy(_pixiApp, Enemy1_walck_animations, Enemy1_attack_animations, Enemy1_hit_animations, Health_bar_image))
+            Game_Scene.Enemy_array[0].push(new Enemy(_pixiApp, Game_Scene.Enemy1_animations_map,Health_bar_image))
             Game_Scene.Enemy_array[0][i].Entity_summon();
             this.addChild(Game_Scene.Enemy_array[0][i]);
         };
 
         for(let i = 0; i <= this.enemy2_Max_count - 1; i++){
-            Game_Scene.Enemy_array[1].push(new Enemy(_pixiApp, Enemy2_walck_animations, Enemy2_attack_animations, Enemy2_hit_animations, Health_bar_image))
+            Game_Scene.Enemy_array[1].push(new Enemy(_pixiApp, Game_Scene.Enemy2_animations_map, Health_bar_image))
             this.addChild(Game_Scene.Enemy_array[1][i]);
             Game_Scene.Enemy_array[1][i].Entity_summon();
         };
         
         for(let i = 0; i <= this.enemy3_Max_count - 1; i++){
-            Game_Scene.Enemy_array[2].push(new Enemy(_pixiApp, Enemy3_walck_animations, Enemy3_attack_animations, Enemy3_hit_animations, Health_bar_image))
+            Game_Scene.Enemy_array[2].push(new Enemy(_pixiApp, Game_Scene.Enemy3_animations_map, Health_bar_image))
             this.addChild(Game_Scene.Enemy_array[2][i]);
             Game_Scene.Enemy_array[2][i].Entity_summon();
         };

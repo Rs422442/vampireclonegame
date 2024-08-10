@@ -7,30 +7,25 @@ export default class Enemy extends PIXI.Container {
 	x_cor: number = Math.floor(Math.random() * window.innerWidth);
 	y_cor: number = Math.floor(Math.random() * window.innerHeight);
 	Enemy_direction:number = 0.5;
-	Entity_walck_animation: PIXI.Texture<PIXI.Resource>[] = [];
-	Entity_attack_animation: PIXI.Texture<PIXI.Resource>[] = [];
-	Entity_hit_animation: PIXI.Texture<PIXI.Resource>[] = [];
+	Enemy_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]>
 	Health_bar_image: PIXI.Texture<PIXI.Resource>;
 	points:number[][] = [[],[],[],[]];
 	last_x_cor:number = super.x;
 
 	constructor(
 		_pixiApp: PIXI.Application,
-		_Entity_walck_animation: PIXI.Texture<PIXI.Resource>[],
-		_Entity_attack_animation: PIXI.Texture<PIXI.Resource>[],
-		_Entity_hit_animation: PIXI.Texture<PIXI.Resource>[],
+		_Enemy_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]>,
 		_Health_bar_image: PIXI.Texture<PIXI.Resource>,
 	) {
 		super();
-		this.Entity_walck_animation = _Entity_walck_animation;
-		this.Entity_attack_animation = _Entity_attack_animation;
-		this.Entity_hit_animation = _Entity_hit_animation;
+		this.Enemy_animations_map = _Enemy_animations_map;
 		this.Health_bar_image = _Health_bar_image;
 	}
 
 	Entity_summon(
 	) {
-		this.Entity_sprite = new PIXI.AnimatedSprite(this.Entity_walck_animation);
+		let image: PIXI.Texture<PIXI.Resource>[] | undefined = this.Enemy_animations_map.get("walk")
+		this.Entity_sprite = new PIXI.AnimatedSprite(image);
 		this.Entity_sprite.anchor.x = 0.5;
 		this.Entity_sprite.anchor.y = 1;
 		this.Entity_sprite.scale.x = this.Enemy_direction;
@@ -62,15 +57,12 @@ export default class Enemy extends PIXI.Container {
 	Entity_walck(
 		t:number
 	) {
-		//let elapsed:number = 0.0;
-		//_pixiApp.ticker.add(() => {
-			//elapsed += _pixiApp.ticker.deltaTime;
 			if ((t == 0)){
 				this.points[0][0] = super.x;
 				this.points[0][1] = super.y;
 				for(let i = 1; i <= 3; i++){
-					this.points[i][0] = Math.floor(Math.random() * window.innerWidth + Math.random() * window.innerWidth);
-					this.points[i][1] = Math.floor(Math.random() * window.innerHeight + Math.random() * window.innerHeight);
+					this.points[i][0] = Math.floor(Math.random() * window.innerWidth);
+					this.points[i][1] = Math.floor(Math.random() * window.innerHeight);
 				};
 			};
 
@@ -103,16 +95,16 @@ export default class Enemy extends PIXI.Container {
 		Point[0] = Math.pow((1 - t), 3)*p0[0] + 3*t*Math.pow((1 - t), 2)*p1[0] + 3*Math.pow(t, 2)*(1-t)*p2[0] + Math.pow(t, 3)*p3[0];
 		Point[1] = Math.pow((1 - t), 3)*p0[1] + 3*t*Math.pow((1 - t), 2)*p1[1] + 3*Math.pow(t, 2)*(1-t)*p2[1] + Math.pow(t, 3)*p3[1]; 
 		if (Point[0] < 0){
-			Point[0] = window.innerWidth + Point[0];
+			Point[0] = (-1) * Point[0];
 		};
 		if (Point[0] > window.innerWidth){
-			Point[0] = Point[0] - window.innerWidth;
+			Point[0] = window.innerWidth - (Point[0] - window.innerWidth) ;
 		};
 		if (Point[1] < 0){
-			Point[1] = window.innerHeight - Point[1];
+			Point[1] = (-1) * Point[1];
 		};
 		if (Point[1] > window.innerHeight){
-			Point[1] = Point[1] - window.innerHeight;
+			Point[1] = window.innerHeight - (Point[1] - window.innerHeight) ;
 		};
 		return Point;
 	}

@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 import AssetManager from "../AssetsManager";
 import Pause from "../scene/Pause_Scene";
+import Game_Scene from "../scene/Game_Scene";
 
 
 export default class Hero extends PIXI.Container {
@@ -21,23 +22,19 @@ export default class Hero extends PIXI.Container {
         Assetsload:AssetManager,
         _Hero_Heath_bar_image:PIXI.Texture<PIXI.Resource>,
         _Hero_Health_bar_foreground_image:PIXI.Texture<PIXI.Resource>,
-        _animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]>
     ) {
         super();
         
         console.log(Hero.keys)
         this.Assetsloader = Assetsload;
         this.Hero_Heath_bar_image = _Hero_Heath_bar_image;
-        this.Hero_Health_bar_foreground_image = _Hero_Health_bar_foreground_image;
-        Hero.animations_map = _animations_map;
-
-        
+        this.Hero_Health_bar_foreground_image = _Hero_Health_bar_foreground_image;        
     };
 
     //Escape Enter
 
     Hero_summon(){
-        let idle: PIXI.Texture<PIXI.Resource>[] = Hero.animations_map.get("idle")
+        let idle: PIXI.Texture<PIXI.Resource>[] | undefined = Game_Scene.Hero_animations_map.get("idle")
         this.Hero_sprite = new PIXI.AnimatedSprite(idle);
 		this.Hero_sprite.anchor.x = 0.5;
 		this.Hero_sprite.anchor.y = 1;
@@ -111,12 +108,12 @@ export default class Hero extends PIXI.Container {
 
         if ((this.walck_flag)&&(!change_flag)){
             if ((this.walck_flag) && (!this.idle_flag)) {
-                let walck_textures:PIXI.Texture<PIXI.Resource>[]  = Hero.animations_map.get("walck");
+                let walck_textures:PIXI.Texture<PIXI.Resource>[]  = Game_Scene.Hero_animations_map.get("walk");
                 this.Hero_sprite.textures = walck_textures;
                 this.Hero_sprite.play();
                 this.Hero_sprite.animationSpeed = 0.15;
             }else{
-                let idle_textures:PIXI.Texture<PIXI.Resource>[] = Hero.animations_map.get("idle");
+                let idle_textures:PIXI.Texture<PIXI.Resource>[] = Game_Scene.Hero_animations_map.get("idle");
                 this.Hero_sprite.textures = idle_textures;
                 this.Hero_sprite.play();
                 this.Hero_sprite.animationSpeed = 0.15;
