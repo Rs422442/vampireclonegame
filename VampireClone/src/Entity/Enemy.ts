@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
-import Hero from "./Hero";
+import Entity from "./Entity";
 
-export default class Enemy extends PIXI.Container {
+export default class Enemy extends Entity {
 	Entity_sprite!: PIXI.AnimatedSprite;
 	Health_bar_sprite!: PIXI.Sprite;
 	Health_bar_foreground_2_sprite!: PIXI.Sprite;
@@ -38,7 +38,7 @@ export default class Enemy extends PIXI.Container {
 		this.Health_bar_sprite = new PIXI.Sprite(this.Health_bar_image);
 		this.Health_bar_sprite.anchor._x = 0.5;
 		this.Health_bar_sprite.anchor._y = 1;
-		this.Health_bar_sprite.width = 30;
+		this.Health_bar_sprite.width = this.HP/2;
 		this.Health_bar_sprite.height = 10;
 		this.Health_bar_sprite.x = this.x;
 		this.Health_bar_sprite.y = this.y - this.Entity_sprite.height;

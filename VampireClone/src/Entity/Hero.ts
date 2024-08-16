@@ -3,6 +3,7 @@ import AssetManager from "../AssetsManager";
 import Pause from "../scene/Pause_Scene";
 import Game_Scene from "../scene/Game_Scene";
 import Entity from "./Entity";
+import Weapon from "../Weapon";
 
 
 export default class Hero extends Entity {
@@ -16,6 +17,7 @@ export default class Hero extends Entity {
     idle_flag:boolean = true;
     static keys: Map<string, boolean> = new Map<string, boolean>();
     static animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]>;
+    Weapon: Weapon = new Weapon();
 
     constructor(
         _pixiApp: PIXI.Application,
@@ -24,7 +26,9 @@ export default class Hero extends Entity {
         _Hero_Health_bar_foreground_image:PIXI.Texture<PIXI.Resource>,
     ) {
         super();
-        
+        this.Speed = 5;
+        this.HP = 1000;
+                
         console.log(Hero.keys)
         this.Assetsloader = Assetsload;
         this.Hero_Heath_bar_image = _Hero_Heath_bar_image;
@@ -79,20 +83,20 @@ export default class Hero extends Entity {
         document.addEventListener('keydown',this.keysdown);
         document.addEventListener('keyup',this.keysup);
         if (Hero.keys.get("w") || Hero.keys.get("ArrowUp") || Hero.keys.get("ц")){
-            this.y -= 5;
+            this.y -= this.Speed;
         };
 
         if (Hero.keys.get("s") || Hero.keys.get("ArrowDown") || Hero.keys.get("ы")){
-            this.y += 5;
+            this.y += this.Speed;
         };
 
         if (Hero.keys.get("a") || Hero.keys.get("ArrowLeft") || Hero.keys.get("ф")){
-            this.x -= 5;
+            this.x -= this.Speed;
             this.Hero_sprite.scale.x = -1.5;
         };
 
         if (Hero.keys.get("d") || Hero.keys.get("ArrowRight") || Hero.keys.get("в")){
-            this.x += 5;
+            this.x += this.Speed;
             this.Hero_sprite.scale.x = 1.5;
         };
 
