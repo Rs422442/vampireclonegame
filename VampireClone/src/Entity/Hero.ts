@@ -36,7 +36,10 @@ export default class Hero extends Entity {
     //Escape Enter
 
     Hero_summon(){
-        let idle: PIXI.Texture<PIXI.Resource>[] | undefined = Game_Scene.Hero_animations_map.get("idle")
+        let idle: PIXI.Texture<PIXI.Resource>[];
+        if (Game_Scene.Hero_animations_map.get("idle") != undefined)
+            {idle = Game_Scene.Hero_animations_map.get("idle")}
+        else{idle = [PIXI.Texture.EMPTY]};
         this.Hero_sprite = new PIXI.AnimatedSprite(idle);
 		this.Hero_sprite.anchor.x = 0.5;
 		this.Hero_sprite.anchor.y = 1;
@@ -108,12 +111,18 @@ export default class Hero extends Entity {
 
 
         if (this.walck_flag) {
-            let walck_textures:PIXI.Texture<PIXI.Resource>[]  = Game_Scene.Hero_animations_map.get("walk");
+            let walck_textures:PIXI.Texture<PIXI.Resource>[]
+            if (Game_Scene.Hero_animations_map.get("walk") != undefined)
+                {walck_textures = Game_Scene.Hero_animations_map.get("walk")}
+            else{walck_textures = [PIXI.Texture.EMPTY]};
             this.Hero_sprite.textures = walck_textures;
             this.Hero_sprite.play();
             this.Hero_sprite.animationSpeed = 0.15;
         }else{
-            let idle_textures:PIXI.Texture<PIXI.Resource>[] = Game_Scene.Hero_animations_map.get("idle");
+            let idle_textures:PIXI.Texture<PIXI.Resource>[];
+            if (Game_Scene.Hero_animations_map.get("idle") != undefined)
+                {idle_textures = Game_Scene.Hero_animations_map.get("idle")}
+            else{idle_textures = [PIXI.Texture.EMPTY]};
             this.Hero_sprite.textures = idle_textures;
             this.Hero_sprite.play();
             this.Hero_sprite.animationSpeed = 0.15;
