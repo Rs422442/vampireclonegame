@@ -23,10 +23,11 @@ export default class Game_Scene extends PIXI.Container{
     Start_buttn_image!:PIXI.Texture<PIXI.Resource>;
     Stop_buttn_image!:PIXI.Texture<PIXI.Resource>;
     Pause_flag:boolean = false;
-    static Enemy1_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>()
-    static Enemy2_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>()
-    static Enemy3_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>()
-    static Hero_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>()
+    static Enemy1_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>();
+    static Enemy2_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>();
+    static Enemy3_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>();
+    static Hero_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>();
+    static Weapon_animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]> = new Map<string, PIXI.Texture<PIXI.Resource>[]>();
     
 
     constructor(_pixiApp:PIXI.Application, Assetsload:AssetManager){
@@ -65,6 +66,10 @@ export default class Game_Scene extends PIXI.Container{
         Game_Scene.Hero_animations_map.set("walk", Game.createanimations(Game.gg_walk));
         Game_Scene.Hero_animations_map.set("idle", Game.createanimations(Game.gg_idle));
 
+        Game_Scene.Weapon_animations_map.set("Onehand", Game.createanimations(Game.onehand));
+        Game_Scene.Weapon_animations_map.set("Twohand", Game.createanimations(Game.twohand));
+        Game_Scene.Weapon_animations_map.set("Spear", Game.createanimations(Game.spear));
+
         this.Hero_entity = new Hero(   
             _pixiApp,
             Assetsload,
@@ -74,7 +79,6 @@ export default class Game_Scene extends PIXI.Container{
 
         let Shopmen_1 = new Shopman(_pixiApp, Shopman_iddle_animation, Shopman_Open_shop_animation);
 
-        this.Hero_entity.Hero_summon();
         Shopmen_1.Shopman_spawn();
 
         this.addChild(this.Hero_entity);

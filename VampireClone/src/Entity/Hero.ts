@@ -2,9 +2,10 @@ import * as PIXI from "pixi.js";
 import AssetManager from "../AssetsManager";
 import Pause from "../scene/Pause_Scene";
 import Game_Scene from "../scene/Game_Scene";
+import Entity from "./Entity";
 
 
-export default class Hero extends PIXI.Container {
+export default class Hero extends Entity {
     Hero_sprite!: PIXI.AnimatedSprite;
     Hero_Heath_bar_sprite!: PIXI.Sprite;
     Hero_Health_bar_foreground_sprite!: PIXI.Sprite;
@@ -27,7 +28,9 @@ export default class Hero extends PIXI.Container {
         console.log(Hero.keys)
         this.Assetsloader = Assetsload;
         this.Hero_Heath_bar_image = _Hero_Heath_bar_image;
-        this.Hero_Health_bar_foreground_image = _Hero_Health_bar_foreground_image;        
+        this.Hero_Health_bar_foreground_image = _Hero_Health_bar_foreground_image; 
+        
+        this.Hero_summon()
     };
 
     //Escape Enter
@@ -122,20 +125,52 @@ export default class Hero extends PIXI.Container {
     };
 
     keysdown(e: { key: string; }){
-        console.log(e.key);
-        Hero.keys.set(e.key, true);
-        console.log(Hero.keys);
-        this.walck_flag = true;
-        this.idle_flag = false;
-        console.log(this.walck_flag);
+        if ((e.key == "w")||
+            (e.key == "s")||
+            (e.key == "a")||
+            (e.key == "d")||
+            (e.key == "ArrowUp")||
+            (e.key == "ArrowDown")||
+            (e.key == "ArrowLeft")||
+            (e.key == "ArrowRight")||
+            (e.key == "ц")||
+            (e.key == "ы")||
+            (e.key == "ф")||
+            (e.key == "в")||
+            (e.key == "Escape")||
+            (e.key == "Enter")
+        ){
+            console.log(e.key);
+            Hero.keys.set(e.key, true);
+            console.log(Hero.keys);
+            this.walck_flag = true;
+            this.idle_flag = false;
+            console.log(this.walck_flag);
+        };
     };
 
     keysup(e: { key: string; }){
-        console.log(e.key);
-        Hero.keys.set(e.key, false);
-        console.log(Hero.keys);
-        this.walck_flag = false;
-        this.idle_flag = true;
-        console.log(this.walck_flag);
+        if ((e.key == "w")||
+            (e.key == "s")||
+            (e.key == "a")||
+            (e.key == "d")||
+            (e.key == "ArrowUp")||
+            (e.key == "ArrowDown")||
+            (e.key == "ArrowLeft")||
+            (e.key == "ArrowRight")||
+            (e.key == "ц")||
+            (e.key == "ы")||
+            (e.key == "ф")||
+            (e.key == "в")||
+            (e.key == "Escape")||
+            (e.key == "Enter")
+        ){
+            console.log(e.key);
+            Hero.keys.set(e.key, false);
+            console.log(Hero.keys);
+            this.walck_flag = false;
+            this.idle_flag = true;
+            console.log(this.walck_flag);
+        };
     };
 };
