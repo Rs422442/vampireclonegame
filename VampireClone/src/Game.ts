@@ -26,6 +26,9 @@ export default class Game {
 	static gg_twohand: string[] = [];
 	static gg_spear: string[] = [];
 	static button_image_map: Map<string, PIXI.Texture<PIXI.Resource>> = new Map<string, PIXI.Texture<PIXI.Resource>>()
+	static onehand: string[] = [];
+	static twohand: string[] = [];
+	static spear: string[] = [];
 
 	constructor(_pixiApp: PIXI.Application) {}
 
@@ -144,7 +147,29 @@ export default class Game {
 			["Coin3_5", "./assets/coins/coin3/coins_3_animation_5.png"],
 			["Coin3_6", "./assets/coins/coin3/coins_3_animation_6.png"],
 			["Coin3_7", "./assets/coins/coin3/coins_3_animation_7.png"],
-			["Coin3_8", "./assets/coins/coin3/coins_3_animation_8.png"],// добавить эффекты оружия которые будут наносить урон
+			["Coin3_8", "./assets/coins/coin3/coins_3_animation_8.png"],
+			["Onehand_sword","./assets/weapon/onehand_sword.png"],
+			["Onehand-1","./assets/weapon/onehand-1.png"],
+			["Onehand-2","./assets/weapon/onehand-2.png"],
+			["Onehand-3","./assets/weapon/onehand-3.png"],
+			["Onehand-4","./assets/weapon/onehand-4.png"],
+			["Onehand-5","./assets/weapon/onehand-5.png"],
+			["Onehand-6","./assets/weapon/onehand-6.png"],
+			["Twohand_sword","./assets/weapon/twohand_sword.png"],
+			["Twohand-1","./assets/weapon/twohand-1.png"],
+			["Twohand-2","./assets/weapon/twohand-2.png"],
+			["Twohand-3","./assets/weapon/twohand-3.png"],
+			["Twohand-4","./assets/weapon/twohand-4.png"],
+			["Twohand-5","./assets/weapon/twohand-5.png"],
+			["Twohand-6","./assets/weapon/twohand-6.png"],
+			["Spear","./assets/weapon/spear.png"],
+			["Spear-1","./assets/weapon/spear-1.png"],
+			["Spear-2","./assets/weapon/spear-2.png"],
+			["Spear-3","./assets/weapon/spear-3.png"],
+			["Spear-4","./assets/weapon/spear-4.png"],
+			["Spear-5","./assets/weapon/spear-5.png"],
+			["Spear-6","./assets/weapon/spear-6.png"],
+			
 		]);
 
 		Game.button_image_map.set("Start_new_game_buttn",Game.GameLoading.getTexture("Start_new_game_buttn"));
@@ -152,7 +177,7 @@ export default class Game {
 		Game.button_image_map.set("Pause_buttn",Game.GameLoading.getTexture("Pause_buttn"));
 		Game.button_image_map.set("Start_buttn",Game.GameLoading.getTexture("Start_buttn"));
 		Game.button_image_map.set("Stop_buttn",Game.GameLoading.getTexture("Stop_buttn"));
-
+		
 		Game.coin1_array = [
 			"Coin1_1",
 			"Coin1_2",
@@ -260,6 +285,30 @@ export default class Game {
 			"GG_spear_5",
 			"GG_spear_6",
 			"GG_spear_7",
+		];
+		Game.onehand = [
+			"Onehand-1",
+			"Onehand-2",
+			"Onehand-3",
+			"Onehand-4",
+			"Onehand-5",
+			"Onehand-6",			
+		];
+		Game.twohand = [
+			"Twohand-1",
+			"Twohand-2",
+			"Twohand-3",
+			"Twohand-4",
+			"Twohand-5",
+			"Twohand-6",			
+		];
+		Game.spear = [
+			"Spear-1",
+			"Spear-2",
+			"Spear-3",
+			"Spear-4",
+			"Spear-5",
+			"Spear-6",			
 		];
 
 		new Menu(_pixiApp, Game.GameLoading);

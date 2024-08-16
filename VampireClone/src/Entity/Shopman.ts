@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+//import Weapon from "../Weapon";
 
 export default class Shopman extends PIXI.Container{
     Shopman_sprite!:PIXI.AnimatedSprite;
@@ -15,6 +16,7 @@ export default class Shopman extends PIXI.Container{
         super();
         this.Shopman_iddle_animation = _Shopman_iddle_animation;
         this.Shopman_Open_shop_animation = _Shopman_Open_shop_animation;
+        //let onehand = new Weapon(); 
     };
 
     Shopman_spawn() {
