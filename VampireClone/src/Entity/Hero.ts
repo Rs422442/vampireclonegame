@@ -1,9 +1,10 @@
 import * as PIXI from "pixi.js";
 import AssetManager from "../AssetsManager";
-import Pause from "../scene/Pause_Scene";
+//import Pause from "../scene/Pause_Scene";
 import Game_Scene from "../scene/Game_Scene";
 import Entity from "./Entity";
 import Weapon from "../Weapon";
+import Game from "../Game";
 
 
 export default class Hero extends Entity {
@@ -17,10 +18,11 @@ export default class Hero extends Entity {
     idle_flag:boolean = true;
     static keys: Map<string, boolean> = new Map<string, boolean>();
     static animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]>;
-    Weapon: Weapon = new Weapon();
+    Hero_Weapon!: Weapon;
+    container: PIXI.Container;
 
     constructor(
-        _pixiApp: PIXI.Application,
+        Container: PIXI.Container,
         Assetsload:AssetManager,
         _Hero_Heath_bar_image:PIXI.Texture<PIXI.Resource>,
         _Hero_Health_bar_foreground_image:PIXI.Texture<PIXI.Resource>,
@@ -28,11 +30,20 @@ export default class Hero extends Entity {
         super();
         this.Speed = 5;
         this.HP = 1000;
+
+        this.container = Container;
                 
         console.log(Hero.keys)
         this.Assetsloader = Assetsload;
         this.Hero_Heath_bar_image = _Hero_Heath_bar_image;
         this.Hero_Health_bar_foreground_image = _Hero_Health_bar_foreground_image; 
+
+        this.Hero_Weapon = new Weapon();
+
+        this.Hero_Weapon.Animations = Game.createanimations(Game.onehand)
+        this.Hero_Weapon.Damage = 10;
+        this.Hero_Weapon.Speed = 5;
+        console.log(this.Hero_Weapon);
         
         this.Hero_summon()
     };
@@ -134,7 +145,21 @@ export default class Hero extends Entity {
     };
 
     Hero_attack(){
+        document.addEventListener('click', this.onclick);
+    };
 
+    onclick(e){
+        console.log("click");
+        this.Hero_Weapon.spawn_effect();// тут ошибочка вылезает
+        this.container.addChild(this.Hero_Weapon);
+        this.Hero_Weapon.x = this.x;
+        this.Hero_Weapon.y = this.y;
+        if(this.Hero_sprite.scale.x >= 0){
+            this.Hero_Weapon.x += this.Hero_Weapon.Speed;
+        }
+        else{
+            this.Hero_Weapon.x -= this.Hero_Weapon.Speed;
+        };
     };
 
     keysdown(e: { key: string; }){

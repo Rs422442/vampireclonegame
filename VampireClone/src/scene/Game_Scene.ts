@@ -8,7 +8,7 @@ import Pause from './Pause_Scene.ts';
 
 export default class Game_Scene extends PIXI.Container{
     static Enemy_array:Enemy[][] = [[],[],[]];
-    Hero_entity: Hero;
+    static Hero_entity: Hero;
     enemy1_Max_count:number = 3;
     enemy2_Max_count: number = 3;
     enemy3_Max_count: number = 3;
@@ -70,8 +70,8 @@ export default class Game_Scene extends PIXI.Container{
         Game_Scene.Weapon_animations_map.set("Twohand", Game.createanimations(Game.twohand));
         Game_Scene.Weapon_animations_map.set("Spear", Game.createanimations(Game.spear));
 
-        this.Hero_entity = new Hero(   
-            _pixiApp,
+        Game_Scene.Hero_entity = new Hero(   
+            this,
             Assetsload,
             Health_bar_image,
             Hero_Health_bar_foreground_image,
@@ -81,7 +81,7 @@ export default class Game_Scene extends PIXI.Container{
 
         Shopmen_1.Shopman_spawn();
 
-        this.addChild(this.Hero_entity);
+        this.addChild(Game_Scene.Hero_entity);
         this.addChild(Shopmen_1);
 
         for(let i = 0; i <= this.enemy1_Max_count - 1; i++){
@@ -110,7 +110,8 @@ export default class Game_Scene extends PIXI.Container{
         //this.Pause_event(_pixiApp);        
 
         _pixiApp.ticker.add(()=>{
-            this.Hero_entity.Hero_movement();
+            Game_Scene.Hero_entity.Hero_movement();
+            Game_Scene.Hero_entity.Hero_attack();
         
             for(let i = 0; i <= this.enemy3_Max_count - 1; i++){
                 Game_Scene.Enemy_array[0][i].Entity_walck(this.t1);
