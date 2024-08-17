@@ -33,9 +33,10 @@ export default class Shopman extends Entity{
         console.log("Shopman added");
     };
 
-    Shopman_open_shop(): PIXI.Container{
+    Shopman_open_shop(_pixiApp: PIXI.Application): PIXI.Container{
         console.log("Shop opened");
-        return new Shop();
+        let Shop_: Shop = new Shop(_pixiApp)
+        return Shop_.Shop_block(_pixiApp);
     };
 
 };

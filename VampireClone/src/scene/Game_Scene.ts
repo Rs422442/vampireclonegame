@@ -115,6 +115,7 @@ export default class Game_Scene extends PIXI.Container{
 
             if (Hero.keys.get("Escape")){
                 this.addChild(new Pause(_pixiApp));
+                _pixiApp.ticker.stop();
             };
 
             if (Hero.keys.get("Enter") && 
@@ -123,7 +124,7 @@ export default class Game_Scene extends PIXI.Container{
                 (Game_Scene.Hero_entity.y <= Shopmen_1.y + 50) &&
                 (Game_Scene.Hero_entity.y >= Shopmen_1.y - 50)
             ){
-                this.addChild(Shopmen_1.Shopman_open_shop());
+                this.addChild(Shopmen_1.Shopman_open_shop(_pixiApp));
                 _pixiApp.ticker.stop();
             };
 

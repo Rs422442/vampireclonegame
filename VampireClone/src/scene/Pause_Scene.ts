@@ -15,7 +15,6 @@ export default class Pause extends PIXI.Container{
 
         super();
 
-        _pixiApp.ticker.stop();
         console.warn("Paused")
 
         Pause.Game_over_sprite = Menu_scene.Create_Menu_button(
