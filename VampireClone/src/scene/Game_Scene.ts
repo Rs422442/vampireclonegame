@@ -124,7 +124,8 @@ export default class Game_Scene extends PIXI.Container{
                 (Game_Scene.Hero_entity.y <= Shopmen_1.y + 50) &&
                 (Game_Scene.Hero_entity.y >= Shopmen_1.y - 50)
             ){
-                this.addChild(Shopmen_1.Shopman_open_shop(_pixiApp));
+                let Shop_menu: PIXI.Container = Shopmen_1.Shopman_open_shop(_pixiApp);
+                this.addChild(Shop_menu);
                 _pixiApp.ticker.stop();
             };
 

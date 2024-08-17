@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import Game from "../Game";
+import Game_Scene from "./Game_Scene";
 
 export default class Shop extends PIXI.Container{
     constructor(_pixiApp: PIXI.Application){
@@ -17,10 +18,7 @@ export default class Shop extends PIXI.Container{
         Exit_Sprite.buttonMode = true;
         Exit_Sprite.visible = true;
 
-        Exit_Sprite.on('click',()=>{
-            console.warn("Exit_button work");
-            _pixiApp.ticker.start();
-        });
+        
 
         let Block: PIXI.Container = new PIXI.Container();
 
@@ -33,6 +31,12 @@ export default class Shop extends PIXI.Container{
 
         Exit_Sprite.x = Block.width - Exit_Sprite.width/2;
         Exit_Sprite.y = Block.height - Exit_Sprite.height/2;
+
+        Exit_Sprite.on('click',()=>{
+            console.warn("Exit_button work");
+            _pixiApp.ticker.start();
+            Block.removeChildren();
+        });
                
         return Block;
     };
