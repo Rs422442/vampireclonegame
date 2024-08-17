@@ -8,8 +8,8 @@ export default class Shopman extends Entity{
     Sprite!:PIXI.AnimatedSprite;
     Shopman_iddle_animation: PIXI.Texture<PIXI.Resource>[] = [];
     Shopman_Open_shop_animation: PIXI.Texture<PIXI.Resource>[] = [];
-    static x_cor:number = Math.floor(Math.random() * window.innerWidth);
-    static y_cor:number = Math.floor(Math.random() * window.innerHeight);
+    static x_cor:number = window.innerWidth/2 //Math.floor(Math.random() * window.innerWidth);
+    static y_cor:number = window.innerHeight/2 // Math.floor(Math.random() * window.innerHeight);
 
     constructor(
         _pixiApp: PIXI.Application,
