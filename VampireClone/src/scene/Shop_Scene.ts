@@ -61,7 +61,7 @@ export default class Shop extends PIXI.Container{
         //graphics_3.endFill();
 
 
-        Exit_Sprite.x = Block.width + 30;
+        Exit_Sprite.x = Block.width + 20;
         Exit_Sprite.y = Block.height - Weapon_1_sprite.height/2 + Exit_Sprite.height/2;
 
         Weapon_1_sprite.x = Block.width - 30;
@@ -78,9 +78,9 @@ export default class Shop extends PIXI.Container{
         Block.addChild(Weapon_2_sprite);
         Block.addChild(Weapon_3_sprite);
 
-        Weapon_1_sprite.mask = graphics_1; //Как-то неправильно работает
-        Weapon_2_sprite.mask = graphics_2;
-        Weapon_3_sprite.mask = graphics_3;
+        //Weapon_1_sprite.mask = graphics_1; //Как-то неправильно работает
+        //Weapon_2_sprite.mask = graphics_2; //Как-то неправильно работает
+        //Weapon_3_sprite.mask = graphics_3; //Как-то неправильно работает
 
         Exit_Sprite.on('click',()=>{
             console.warn("Exit_button work");
