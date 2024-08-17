@@ -8,17 +8,14 @@ import Game from "../Game";
 
 
 export default class Hero extends Entity {
-    Hero_sprite!: PIXI.AnimatedSprite;
-    Hero_Heath_bar_sprite!: PIXI.Sprite;
-    Hero_Health_bar_foreground_sprite!: PIXI.Sprite;
+    Sprite!: PIXI.AnimatedSprite;
     Hero_Heath_bar_image!:PIXI.Texture<PIXI.Resource>;
     Hero_Health_bar_foreground_image!:PIXI.Texture<PIXI.Resource>;
     Assetsloader!:AssetManager;
     walck_flag:boolean = false;
-    idle_flag:boolean = true;
     static keys: Map<string, boolean> = new Map<string, boolean>();
-    static animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]>;
-    Hero_Weapon!: Weapon;
+    //static animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]>;
+    Hero_Weapon: Weapon = new Weapon();
     container: PIXI.Container;
 
     constructor(
@@ -38,59 +35,46 @@ export default class Hero extends Entity {
         this.Hero_Heath_bar_image = _Hero_Heath_bar_image;
         this.Hero_Health_bar_foreground_image = _Hero_Health_bar_foreground_image; 
 
-        this.Hero_Weapon = new Weapon();
-
         this.Hero_Weapon.Animations = Game.createanimations(Game.onehand)
         this.Hero_Weapon.Damage = 10;
         this.Hero_Weapon.Speed = 5;
         console.log(this.Hero_Weapon);
+
+        
         
         this.Hero_summon()
     };
 
     //Escape Enter
 
-    Hero_summon(){
+    Hero_summon(): PIXI.Container{
+        
         let idle: PIXI.Texture<PIXI.Resource>[];
         if (Game_Scene.Hero_animations_map.get("idle") != undefined)
             {idle = Game_Scene.Hero_animations_map.get("idle")}
         else{idle = [PIXI.Texture.EMPTY]};
-        this.Hero_sprite = new PIXI.AnimatedSprite(idle);
-		this.Hero_sprite.anchor.x = 0.5;
-		this.Hero_sprite.anchor.y = 1;
-		this.Hero_sprite.scale.x = 1.5;
-		this.Hero_sprite.scale.y = 1.5;
-		this.Hero_sprite.visible = true;
-		this.Hero_sprite.play(); // Это функция, так что её нужно вызвать
-		this.Hero_sprite.animationSpeed = 0.15; // возможно пригодится этот параметр
 
-        this.Hero_Heath_bar_sprite = new PIXI.Sprite(this.Hero_Heath_bar_image);
-		this.Hero_Heath_bar_sprite.anchor.x = 0.5;
-		this.Hero_Heath_bar_sprite.anchor.y = 1;
-		this.Hero_Heath_bar_sprite.scale.x = 0.5;
-        this.Hero_Heath_bar_sprite.scale.y = 0.5;
-		this.Hero_Heath_bar_sprite.y = - this.Hero_sprite.height;
+        this.Sprite = this.Entity_summon(idle, 0.5, 1, 1.5, 1.5, 0.15);
 
-        this.Hero_Health_bar_foreground_sprite = new PIXI.Sprite(this.Hero_Health_bar_foreground_image);
-		this.Hero_Health_bar_foreground_sprite.anchor.x = 0.5;
-		this.Hero_Health_bar_foreground_sprite.anchor.y = 1;
-		this.Hero_Health_bar_foreground_sprite.scale.x = 0.5;
-        this.Hero_Health_bar_foreground_sprite.scale.y = 0.5;
-		this.Hero_Health_bar_foreground_sprite.y = - this.Hero_sprite.height;
+        let Health_bar: PIXI.Sprite =this.Entity_health_bar_summon(this.Hero_Heath_bar_image, 0.5, 1, 100, 15);
+        Health_bar.y = this.Sprite.y - this.Sprite.height;
 
-        this.addChild(this.Hero_Heath_bar_sprite);
-        this.addChild(this.Hero_Health_bar_foreground_sprite);
+		let health_bar_foreground: PIXI.Sprite = this.Entity_health_bar_foreground_summon(this.Hero_Health_bar_foreground_image, 0.5, 1, 100, 15);
+        health_bar_foreground.y = Health_bar.y;
 
         this.x = window.innerWidth/2;
         this.y = window.innerHeight/2;
 
-		this.addChild(this.Hero_sprite);
+        this.addChild(this.Sprite);
+        this.addChild(Health_bar);
+        this.addChild(health_bar_foreground);
 		
 		console.log("Hero added");
+
+        return this;
 	}
 
     Hero_movement(){
-        let change_flag:boolean = this.walck_flag;
         document.addEventListener('keydown',this.keysdown);
         document.addEventListener('keyup',this.keysup);
         if (Hero.keys.get("w") || Hero.keys.get("ArrowUp") || Hero.keys.get("ц")){
@@ -103,12 +87,12 @@ export default class Hero extends Entity {
 
         if (Hero.keys.get("a") || Hero.keys.get("ArrowLeft") || Hero.keys.get("ф")){
             this.x -= this.Speed;
-            this.Hero_sprite.scale.x = -1.5;
+            this.Sprite.scale.x = -1.5;
         };
 
         if (Hero.keys.get("d") || Hero.keys.get("ArrowRight") || Hero.keys.get("в")){
             this.x += this.Speed;
-            this.Hero_sprite.scale.x = 1.5;
+            this.Sprite.scale.x = 1.5;
         };
 
         if (this.x < 0){
@@ -124,23 +108,52 @@ export default class Hero extends Entity {
             this.y = this.y - window.innerHeight;
         };
 
-
-        if (this.walck_flag) {
+        if ((
+            Hero.keys.get("w") ||
+            Hero.keys.get("a") ||
+            Hero.keys.get("d") ||
+            Hero.keys.get("s") ||
+            Hero.keys.get("ц") ||
+            Hero.keys.get("ф") ||
+            Hero.keys.get("в") ||
+            Hero.keys.get("а") ||
+            Hero.keys.get("ArrowUp") ||
+            Hero.keys.get("ArrowDown") ||
+            Hero.keys.get("ArrowLeft") ||
+            Hero.keys.get("ArrowRight")) &&
+            (!this.walck_flag)
+        ){
             let walck_textures:PIXI.Texture<PIXI.Resource>[]
             if (Game_Scene.Hero_animations_map.get("walk") != undefined)
                 {walck_textures = Game_Scene.Hero_animations_map.get("walk")}
             else{walck_textures = [PIXI.Texture.EMPTY]};
-            this.Hero_sprite.textures = walck_textures;
-            this.Hero_sprite.play();
-            this.Hero_sprite.animationSpeed = 0.15;
-        }else{
+            this.Sprite.textures = walck_textures;
+            this.Sprite.play();
+            this.Sprite.animationSpeed = 0.15;
+            this.walck_flag = true;
+        }; if (
+            !Hero.keys.get("w") &&
+            !Hero.keys.get("a") &&
+            !Hero.keys.get("d") &&
+            !Hero.keys.get("s") &&
+            !Hero.keys.get("ц") &&
+            !Hero.keys.get("ф") &&
+            !Hero.keys.get("в") &&
+            !Hero.keys.get("а") &&
+            !Hero.keys.get("ArrowUp") &&
+            !Hero.keys.get("ArrowDown") &&
+            !Hero.keys.get("ArrowLeft") &&
+            !Hero.keys.get("ArrowRight")&&
+            this.walck_flag
+        ){
             let idle_textures:PIXI.Texture<PIXI.Resource>[];
             if (Game_Scene.Hero_animations_map.get("idle") != undefined)
                 {idle_textures = Game_Scene.Hero_animations_map.get("idle")}
             else{idle_textures = [PIXI.Texture.EMPTY]};
-            this.Hero_sprite.textures = idle_textures;
-            this.Hero_sprite.play();
-            this.Hero_sprite.animationSpeed = 0.15;
+            this.Sprite.textures = idle_textures;
+            this.Sprite.play();
+            this.Sprite.animationSpeed = 0.15;
+            this.walck_flag = false;
         };
     };
 
@@ -150,15 +163,16 @@ export default class Hero extends Entity {
 
     onclick(e){
         console.log("click");
-        this.Hero_Weapon.spawn_effect();// тут ошибочка вылезает
-        this.container.addChild(this.Hero_Weapon);
-        this.Hero_Weapon.x = this.x;
-        this.Hero_Weapon.y = this.y;
-        if(this.Hero_sprite.scale.x >= 0){
-            this.Hero_Weapon.x += this.Hero_Weapon.Speed;
+        let effect_sprite: PIXI.AnimatedSprite = this.Hero_Weapon.spawn_effect()
+        this.container.addChild(effect_sprite);
+        effect_sprite.x = this.x;
+        effect_sprite.y = this.y;
+        effect_sprite.play();
+        if(this.Sprite.scale.x >= 0){
+            effect_sprite.x += this.Hero_Weapon.Speed;
         }
         else{
-            this.Hero_Weapon.x -= this.Hero_Weapon.Speed;
+            effect_sprite.x -= this.Hero_Weapon.Speed;
         };
     };
 
@@ -182,7 +196,6 @@ export default class Hero extends Entity {
             Hero.keys.set(e.key, true);
             console.log(Hero.keys);
             this.walck_flag = true;
-            this.idle_flag = false;
             console.log(this.walck_flag);
         };
     };
@@ -207,7 +220,6 @@ export default class Hero extends Entity {
             Hero.keys.set(e.key, false);
             console.log(Hero.keys);
             this.walck_flag = false;
-            this.idle_flag = true;
             console.log(this.walck_flag);
         };
     };

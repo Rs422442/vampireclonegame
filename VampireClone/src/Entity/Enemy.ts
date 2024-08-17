@@ -2,9 +2,7 @@ import * as PIXI from "pixi.js";
 import Entity from "./Entity";
 
 export default class Enemy extends Entity {
-	Entity_sprite!: PIXI.AnimatedSprite;
-	Health_bar_sprite!: PIXI.Sprite;
-	Health_bar_foreground_2_sprite!: PIXI.Sprite;
+	Sprite!: PIXI.AnimatedSprite;
 	x_cor: number = Math.floor(Math.random() * window.innerWidth);
 	y_cor: number = Math.floor(Math.random() * window.innerHeight);
 	Enemy_direction:number = 0.5;
@@ -21,38 +19,32 @@ export default class Enemy extends Entity {
 		super();
 		this.Enemy_animations_map = _Enemy_animations_map;
 		this.Health_bar_image = _Health_bar_image;
+
+		this.Enemy_summon();
 	}
 
-	Entity_summon(
-	) {
-		let image: PIXI.Texture<PIXI.Resource>[] | undefined = this.Enemy_animations_map.get("walk")
-		this.Entity_sprite = new PIXI.AnimatedSprite(image);
-		this.Entity_sprite.anchor.x = 0.5;
-		this.Entity_sprite.anchor.y = 1;
-		this.Entity_sprite.scale.x = this.Enemy_direction;
-		this.Entity_sprite.scale.y = 0.5;
-		this.Entity_sprite.visible = true;
-		this.Entity_sprite.play(); // Это функция, так что её нужно вызвать
-		this.Entity_sprite.animationSpeed = 0.15; // возможно пригодится этот параметр
+	Enemy_summon(
+	): PIXI.Container {
+		let walk_textures: PIXI.Texture<PIXI.Resource>[];
+		
+		if (this.Enemy_animations_map.get("walk") != undefined)
+            {walk_textures = this.Enemy_animations_map.get("walk")}
+        else{walk_textures = [PIXI.Texture.EMPTY]};
 
-		this.Health_bar_sprite = new PIXI.Sprite(this.Health_bar_image);
-		this.Health_bar_sprite.anchor._x = 0.5;
-		this.Health_bar_sprite.anchor._y = 1;
-		this.Health_bar_sprite.width = this.HP/2;
-		this.Health_bar_sprite.height = 10;
-		this.Health_bar_sprite.x = this.x;
-		this.Health_bar_sprite.y = this.y - this.Entity_sprite.height;
+		this.Sprite = this.Entity_summon(walk_textures, 0.5, 1, this.Enemy_direction, 0.5, 0.15);
 
-		this.width = this.Health_bar_sprite.width;
-		this.height = this.Entity_sprite.height + this.Health_bar_sprite.height;
+		let Health_bar: PIXI.Sprite =this.Entity_health_bar_summon(this.Health_bar_image, 0.5, 1, 100, 15);
+        Health_bar.y = this.Sprite.y - this.Sprite.height;
 
 		this.x = this.x_cor;
 		this.y = this.y_cor;
 
-		this.addChild(this.Entity_sprite); //_pixiApp.stage.addChild(this.Entity_sprite);
-		this.addChild(this.Health_bar_sprite);
+		this.addChild(this.Sprite); //_pixiApp.stage.addChild(this.Entity_sprite);
+		this.addChild(Health_bar);
 		
 		console.log("Entity added");
+
+		return this;
 	}
 
 	Entity_walck(
@@ -72,8 +64,9 @@ export default class Enemy extends Entity {
 			}
 			else{
 				this.Enemy_direction = 0.5;
-			}
-			this.Entity_sprite.scale.x = this.Enemy_direction;
+			};
+			
+			this.Sprite.scale.x = this.Enemy_direction;
 			this.last_x_cor = super.x;
 
 			let New_xy_cor = this.besie(this.points[0], this.points[1], this.points[2], this.points[3], t)

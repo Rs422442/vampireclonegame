@@ -86,7 +86,6 @@ export default class Game_Scene extends PIXI.Container{
 
         for(let i = 0; i <= this.enemy1_Max_count - 1; i++){
             Game_Scene.Enemy_array[0].push(new Enemy(_pixiApp, Game_Scene.Enemy1_animations_map,Health_bar_image))
-            Game_Scene.Enemy_array[0][i].Entity_summon();
             Game_Scene.Enemy_array[0][i].HP = 100;
             this.addChild(Game_Scene.Enemy_array[0][i]);
         };
@@ -94,24 +93,18 @@ export default class Game_Scene extends PIXI.Container{
         for(let i = 0; i <= this.enemy2_Max_count - 1; i++){
             Game_Scene.Enemy_array[1].push(new Enemy(_pixiApp, Game_Scene.Enemy2_animations_map, Health_bar_image))
             Game_Scene.Enemy_array[1][i].HP = 200;
-            Game_Scene.Enemy_array[1][i].Entity_summon();
             this.addChild(Game_Scene.Enemy_array[1][i]);
         };
         
         for(let i = 0; i <= this.enemy3_Max_count - 1; i++){
             Game_Scene.Enemy_array[2].push(new Enemy(_pixiApp, Game_Scene.Enemy3_animations_map, Health_bar_image))
             Game_Scene.Enemy_array[2][i].HP = 150;
-            Game_Scene.Enemy_array[2][i].Entity_summon();
             this.addChild(Game_Scene.Enemy_array[2][i]);
-        };
-        
-        
-
-        //this.Pause_event(_pixiApp);        
+        };        
 
         _pixiApp.ticker.add(()=>{
             Game_Scene.Hero_entity.Hero_movement();
-            Game_Scene.Hero_entity.Hero_attack();
+           //Game_Scene.Hero_entity.Hero_attack();
         
             for(let i = 0; i <= this.enemy3_Max_count - 1; i++){
                 Game_Scene.Enemy_array[0][i].Entity_walck(this.t1);
