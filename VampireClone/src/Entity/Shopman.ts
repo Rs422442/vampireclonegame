@@ -1,8 +1,11 @@
 import * as PIXI from "pixi.js";
+import Entity from "./Entity";
+import Hero from "./Hero";
+import Shop from "../scene/Shop_Scene";
 //import Weapon from "../Weapon";
 
-export default class Shopman extends PIXI.Container{
-    Shopman_sprite!:PIXI.AnimatedSprite;
+export default class Shopman extends Entity{
+    Sprite!:PIXI.AnimatedSprite;
     Shopman_iddle_animation: PIXI.Texture<PIXI.Resource>[] = [];
     Shopman_Open_shop_animation: PIXI.Texture<PIXI.Resource>[] = [];
     static x_cor:number = Math.floor(Math.random() * window.innerWidth);
@@ -20,28 +23,19 @@ export default class Shopman extends PIXI.Container{
     };
 
     Shopman_spawn() {
-        this.Shopman_sprite = new PIXI.AnimatedSprite(this.Shopman_iddle_animation);
-		this.Shopman_sprite.anchor.x = 0.5;
-		this.Shopman_sprite.anchor.y = 1;
-		this.Shopman_sprite.scale.x = 0.5;
-		this.Shopman_sprite.scale.y = 0.5;
-		this.Shopman_sprite.visible = true;
-		this.Shopman_sprite.play(); // Это функция, так что её нужно вызвать
-		this.Shopman_sprite.animationSpeed = 0.15; // возможно пригодится этот параметр
-
-        this.width = this.Shopman_sprite.width;
-		this.height = this.Shopman_sprite.height;
+        this.Sprite = this.Entity_summon(this.Shopman_iddle_animation, 0.5, 1, 0.5, 0.5, 0.15);
 
 		this.x = Shopman.x_cor;
 		this.y = Shopman.y_cor;
 
-		this.addChild(this.Shopman_sprite);
+		this.addChild(this.Sprite);
 
         console.log("Shopman added");
     };
 
     Shopman_open_shop(){
         console.log("Shop opened");
+        
     };
 
 };

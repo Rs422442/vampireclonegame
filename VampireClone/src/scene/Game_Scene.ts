@@ -5,6 +5,7 @@ import Game from '../Game.ts';
 import Hero from '../Entity/Hero.ts';
 import Shopman from '../Entity/Shopman.ts';
 import Pause from './Pause_Scene.ts';
+import Shop from './Shop_Scene.ts';
 
 export default class Game_Scene extends PIXI.Container{
     static Enemy_array:Enemy[][] = [[],[],[]];
@@ -114,6 +115,17 @@ export default class Game_Scene extends PIXI.Container{
 
             if (Hero.keys.get("Escape")){
                 this.addChild(new Pause(_pixiApp));
+            };
+
+            if (Hero.keys.get("Enter") && 
+                (Game_Scene.Hero_entity.x <= Shopmen_1.x + 50) &&
+                (Game_Scene.Hero_entity.x >= Shopmen_1.x - 50) &&
+                (Game_Scene.Hero_entity.y <= Shopmen_1.y + 50) &&
+                (Game_Scene.Hero_entity.y >= Shopmen_1.y - 50)
+            ){
+                console.log("Shop open");
+                this.addChild(new Shop());
+                _pixiApp.ticker.stop();
             };
 
             if (this.t1 >= 1){this.t1 = 0}
