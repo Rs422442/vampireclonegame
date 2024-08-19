@@ -164,10 +164,10 @@ export default class Hero extends Entity {
     onclick(e){
         console.log("click");
         let effect_sprite: PIXI.AnimatedSprite = this.Hero_Weapon.spawn_effect(Game_Scene.Weapon_animations_map.get("Onehand"))
-        this.container.addChild(effect_sprite);
         effect_sprite.x = this.x;
         effect_sprite.y = this.y;
         effect_sprite.play();
+        this.container.addChild(effect_sprite);
         if(this.Sprite.scale.x >= 0){
             effect_sprite.x += this.Hero_Weapon.Speed;
         }

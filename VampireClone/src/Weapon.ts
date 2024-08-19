@@ -16,7 +16,6 @@ export default class Weapon{
         effect.scale.x = 1;
 		effect.scale.y = 1;
         effect.visible = true;
-		effect.play();
 		effect.animationSpeed = 0.15;
         return effect;
     }
