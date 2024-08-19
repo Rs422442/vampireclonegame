@@ -47,7 +47,7 @@ export default class Enemy extends Entity {
 		return this;
 	}
 
-	Entity_walck(
+	Enemy_walck(
 		t:number
 	) {
 			if ((t == 0)){

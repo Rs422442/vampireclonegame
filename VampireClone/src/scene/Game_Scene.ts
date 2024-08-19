@@ -108,9 +108,9 @@ export default class Game_Scene extends PIXI.Container{
             Game_Scene.Hero_entity.Hero_attack();
         
             for(let i = 0; i <= this.enemy3_Max_count - 1; i++){
-                Game_Scene.Enemy_array[0][i].Entity_walck(this.t1);
-                Game_Scene.Enemy_array[1][i].Entity_walck(this.t2);
-                Game_Scene.Enemy_array[2][i].Entity_walck(this.t3);
+                Game_Scene.Enemy_array[0][i].Enemy_walck(this.t1);
+                Game_Scene.Enemy_array[1][i].Enemy_walck(this.t2);
+                Game_Scene.Enemy_array[2][i].Enemy_walck(this.t3);
             };
 
             if (Hero.keys.get("Escape")){

@@ -5,6 +5,8 @@ import Game_Scene from "../scene/Game_Scene";
 import Entity from "./Entity";
 import Weapon from "../Weapon";
 import Game from "../Game";
+import Shop from "../scene/Shop_Scene";
+import Pause from "../scene/Pause_Scene";
 
 
 export default class Hero extends Entity {
@@ -158,21 +160,28 @@ export default class Hero extends Entity {
     };
 
     Hero_attack(){
-        document.addEventListener('click', this.onclick);
+        document.addEventListener('click', this.onclick);        
     };
 
     onclick(e){
-        console.log("click");
-        let effect_sprite: PIXI.AnimatedSprite = this.Hero_Weapon.spawn_effect(Game_Scene.Weapon_animations_map.get("Onehand"))
-        effect_sprite.x = this.x;
-        effect_sprite.y = this.y;
-        effect_sprite.play();
-        this.container.addChild(effect_sprite);
-        if(this.Sprite.scale.x >= 0){
-            effect_sprite.x += this.Hero_Weapon.Speed;
-        }
-        else{
-            effect_sprite.x -= this.Hero_Weapon.Speed;
+        if (!Shop.Shop_flag && !Pause.Pause_falg){
+            console.log("click");
+            let effect_textures:PIXI.Texture<PIXI.Resource>[];
+                if (Game_Scene.Weapon_animations_map.get("Onehand") != undefined)
+                    {effect_textures = Game_Scene.Weapon_animations_map.get("Onehand")}
+                else{effect_textures = [PIXI.Texture.EMPTY]};
+            let effect_sprite: PIXI.AnimatedSprite = this.Hero_Weapon.spawn_effect(effect_textures);
+            effect_sprite.x = this.x;
+            effect_sprite.y = this.y;
+            effect_sprite.play();
+            effect_sprite.animationSpeed = 0.15;
+            this.container.addChild(effect_sprite);
+            if(this.Sprite.scale.x >= 0){
+                effect_sprite.x += this.Hero_Weapon.Speed;
+            }
+            else{
+                effect_sprite.x -= this.Hero_Weapon.Speed;
+            };
         };
     };
 

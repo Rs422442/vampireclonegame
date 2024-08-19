@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import Entity from "./Entity";
-import Hero from "./Hero";
+//import Hero from "./Hero";
 import Shop from "../scene/Shop_Scene";
 //import Weapon from "../Weapon";
 
