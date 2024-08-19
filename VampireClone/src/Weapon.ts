@@ -9,8 +9,15 @@ export default class Weapon{
     constructor(){
     };
 
-    spawn_effect(): PIXI.AnimatedSprite{
-        let effect: PIXI.AnimatedSprite = new PIXI.AnimatedSprite(this.Animations);
+    spawn_effect(Animations: PIXI.Texture[]): PIXI.AnimatedSprite{
+        let effect: PIXI.AnimatedSprite = new PIXI.AnimatedSprite(Animations);
+        effect.anchor.x = 0.5;
+		effect.anchor.y = 0.5;
+        effect.scale.x = 1;
+		effect.scale.y = 1;
+        effect.visible = true;
+		effect.play();
+		effect.animationSpeed = 0.15;
         return effect;
     }
 };
