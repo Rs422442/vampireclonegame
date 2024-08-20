@@ -15,11 +15,18 @@ export default class Shop extends PIXI.Container{
 
         let Block: PIXI.Container = new PIXI.Container();
 
+        let style: PIXI.TextStyle = new PIXI.TextStyle({
+            fontFamily: "Arial",
+            fontSize: 12,
+            fill: "blak"
+        });
+
         Block.x = window.innerWidth/2;
         Block.y = window.innerHeight/2;
 
         let Shop_back_sprite:PIXI.Sprite = this.Shop_sprite_create
         (
+            Block,
             Game.GameLoading.getTexture("Shop_back"),
             0.5,
             0.5,
@@ -31,10 +38,9 @@ export default class Shop extends PIXI.Container{
             false,
         );
 
-        console.log(Shop_back_sprite.width, "  " ,Shop_back_sprite.height);
-
         const Exit_Sprite:PIXI.Sprite = this.Shop_sprite_create
         (
+            Shop_back_sprite,
             Game.GameLoading.getTexture("Exit_cross"),
             0.5,
             0.5,
@@ -46,21 +52,9 @@ export default class Shop extends PIXI.Container{
             true
         );
 
-        const Shop_description_sprite:PIXI.Sprite = this.Shop_sprite_create
-        (
-            Game.GameLoading.getTexture("Description_back"),
-            0.5,
-            0.5,
-            1,
-            1,
-            0,
-            Shop_back_sprite.height/2 - 95,
-            false,
-            false
-        );
-
         const Shop_item_1_back_sprite:PIXI.Sprite = this.Shop_sprite_create
         (
+            Shop_back_sprite,
             Game.GameLoading.getTexture("Shop_item_back"),
             0.5,
             0.5,
@@ -68,77 +62,13 @@ export default class Shop extends PIXI.Container{
             1,
             - Shop_back_sprite.width/2 + 38 + 6,
             - Shop_back_sprite.height/2 + 38 + Exit_Sprite.height + 10,
-            false,
-            false
-        );
-
-        const Shop_item_2_back_sprite:PIXI.Sprite = this.Shop_sprite_create
-        (
-            Game.GameLoading.getTexture("Shop_item_back"),
-            0.5,
-            0.5,
-            1,
-            1,
-            - Shop_back_sprite.width/2 + 38 + 6,
-            - Shop_back_sprite.height/2 + 38 + Exit_Sprite.height + 10 + Shop_item_1_back_sprite.height + 10,
-            false,
-            false
-        );
-
-        const Shop_item_3_back_sprite:PIXI.Sprite = this.Shop_sprite_create
-        (
-            Game.GameLoading.getTexture("Shop_item_back"),
-            0.5,
-            0.5,
-            1,
-            1,
-            - Shop_back_sprite.width/2 + 38 + 6,
-            - Shop_back_sprite.height/2 + 38 + Exit_Sprite.height + 10 + Shop_item_1_back_sprite.height + 10 + Shop_item_2_back_sprite.height + 10,
-            false,
-            false
-        );
-
-        const Shop_item_1_parameters_sprite:PIXI.Sprite = this.Shop_sprite_create
-        (
-            Game.GameLoading.getTexture("Parameters_back"),
-            0.5,
-            0.5,
-            1,
-            1,
-            32,
-            - Shop_back_sprite.height/2 + 38 + Exit_Sprite.height + 10,
-            false,
-            false
-        );
-
-        const Shop_item_2_parameters_sprite:PIXI.Sprite = this.Shop_sprite_create
-        (
-            Game.GameLoading.getTexture("Parameters_back"),
-            0.5,
-            0.5,
-            1,
-            1,
-            32,
-            - Shop_back_sprite.height/2 + 38 + Exit_Sprite.height + 10 + Shop_item_1_back_sprite.height + 10,
-            false,
-            false
-        );
-
-        const Shop_item_3_parameters_sprite:PIXI.Sprite = this.Shop_sprite_create
-        (
-            Game.GameLoading.getTexture("Parameters_back"),
-            0.5,
-            0.5,
-            1,
-            1,
-            32,
-            - Shop_back_sprite.height/2 + 38 + Exit_Sprite.height + 10 + Shop_item_1_back_sprite.height + 10 + Shop_item_2_back_sprite.height + 10,
             false,
             false
         );
 
         const Weapon_1_sprite:PIXI.Sprite = this.Shop_sprite_create
         (
+            Shop_item_1_back_sprite,
             Game.GameLoading.getTexture("Onehand_sword"),
             0.5,
             0.5,
@@ -151,8 +81,46 @@ export default class Shop extends PIXI.Container{
             45
         );
 
+        const Shop_item_1_parameters_sprite:PIXI.Sprite = this.Shop_sprite_create
+        (
+            Shop_back_sprite,
+            Game.GameLoading.getTexture("Parameters_back"),
+            0.5,
+            0.5,
+            1,
+            1,
+            32,
+            - Shop_back_sprite.height/2 + 38 + Exit_Sprite.height + 10,
+            false,
+            false
+        );
+
+        const Shop_item_1_parameters_text: PIXI.Text = this.Text_create
+        (
+            Shop_item_1_parameters_sprite,
+            "Weapon 1",
+            style,
+            -0,
+            -16
+        );
+
+        const Shop_item_2_back_sprite:PIXI.Sprite = this.Shop_sprite_create
+        (
+            Shop_back_sprite,
+            Game.GameLoading.getTexture("Shop_item_back"),
+            0.5,
+            0.5,
+            1,
+            1,
+            - Shop_back_sprite.width/2 + 38 + 6,
+            - Shop_back_sprite.height/2 + 38 + Exit_Sprite.height + 10 + Shop_item_1_back_sprite.height + 10,
+            false,
+            false
+        );
+
         const Weapon_2_sprite:PIXI.Sprite = this.Shop_sprite_create
         (
+            Shop_item_2_back_sprite,
             Game.GameLoading.getTexture("Twohand_sword"),
             0.5,
             0.5,
@@ -165,8 +133,46 @@ export default class Shop extends PIXI.Container{
             45
         );
 
+        const Shop_item_2_parameters_sprite:PIXI.Sprite = this.Shop_sprite_create
+        (
+            Shop_back_sprite,
+            Game.GameLoading.getTexture("Parameters_back"),
+            0.5,
+            0.5,
+            1,
+            1,
+            32,
+            - Shop_back_sprite.height/2 + 38 + Exit_Sprite.height + 10 + Shop_item_1_back_sprite.height + 10,
+            false,
+            false
+        );        
+
+        const Shop_item_2_parameters_text: PIXI.Text = this.Text_create
+        (
+            Shop_item_2_parameters_sprite,
+            "Weapon 2",
+            style,
+            -0,
+            -16
+        );
+
+        const Shop_item_3_back_sprite:PIXI.Sprite = this.Shop_sprite_create
+        (
+            Shop_back_sprite,
+            Game.GameLoading.getTexture("Shop_item_back"),
+            0.5,
+            0.5,
+            1,
+            1,
+            - Shop_back_sprite.width/2 + 38 + 6,
+            - Shop_back_sprite.height/2 + 38 + Exit_Sprite.height + 10 + Shop_item_1_back_sprite.height + 10 + Shop_item_2_back_sprite.height + 10,
+            false,
+            false
+        );
+
         const Weapon_3_sprite:PIXI.Sprite = this.Shop_sprite_create
         (
+            Shop_item_3_back_sprite,
             Game.GameLoading.getTexture("Spear"),
             0.5,
             0.5,
@@ -179,22 +185,53 @@ export default class Shop extends PIXI.Container{
             45
         );
 
-        console.log(Shop_item_3_back_sprite.x, "  ", Shop_item_3_back_sprite.y);
+        const Shop_item_3_parameters_sprite:PIXI.Sprite = this.Shop_sprite_create
+        (
+            Shop_back_sprite,
+            Game.GameLoading.getTexture("Parameters_back"),
+            0.5,
+            0.5,
+            1,
+            1,
+            32,
+            - Shop_back_sprite.height/2 + 38 + Exit_Sprite.height + 10 + Shop_item_1_back_sprite.height + 10 + Shop_item_2_back_sprite.height + 10,
+            false,
+            false
+        );        
 
-        Block.addChild(Shop_back_sprite);        
+        const Shop_item_3_parameters_text: PIXI.Text = this.Text_create
+        (
+            Shop_item_3_parameters_sprite,
+            "Weapon 3",
+            style,
+            -0,
+            -16
+        );
 
-        Shop_back_sprite.addChild(Exit_Sprite);
-        Shop_back_sprite.addChild(Shop_description_sprite);
-        Shop_back_sprite.addChild(Shop_item_1_parameters_sprite);
-        Shop_back_sprite.addChild(Shop_item_2_parameters_sprite);
-        Shop_back_sprite.addChild(Shop_item_3_parameters_sprite);
-        Shop_back_sprite.addChild(Shop_item_1_back_sprite);
-        Shop_back_sprite.addChild(Shop_item_2_back_sprite);
-        Shop_back_sprite.addChild(Shop_item_3_back_sprite);        
+        const Shop_description_sprite:PIXI.Sprite = this.Shop_sprite_create
+        (
+            Shop_back_sprite,
+            Game.GameLoading.getTexture("Description_back"),
+            0.5,
+            0.5,
+            1,
+            1,
+            0,
+            Shop_back_sprite.height/2 - 95,
+            false,
+            false
+        );
 
-        Shop_item_1_back_sprite.addChild(Weapon_1_sprite);
-        Shop_item_2_back_sprite.addChild(Weapon_2_sprite);
-        Shop_item_3_back_sprite.addChild(Weapon_3_sprite);
+        const Shop_description_text: PIXI.Text = this.Text_create
+        (
+            Shop_description_sprite,
+            "Description",
+            style,
+            0,
+            0
+        );
+
+        console.log(Shop_item_3_back_sprite.x, "  ", Shop_item_3_back_sprite.y);        
 
         Exit_Sprite.on('click',()=>{
             this.Exit_shop(Block, _pixiApp);
@@ -222,7 +259,28 @@ export default class Shop extends PIXI.Container{
         Shop.Shop_flag = false;
     };
 
+    Text_create(
+        container:PIXI.Container,
+        text: string,
+        style: PIXI.TextStyle,
+        x_cor: number,
+        y_cor: number
+    ):PIXI.Text{
+        const message:PIXI.Text = new PIXI.Text(text, style);
+
+        message.anchor.x = 0.5;
+        message.anchor.y = 0.5;
+
+        message.x = x_cor;
+        message.y = y_cor;
+
+        container.addChild(message);
+
+        return message
+    }
+
     Shop_sprite_create(
+        container:PIXI.Container,
         image: PIXI.Texture,
         anchor_x: number,
         anchor_y: number,
@@ -235,7 +293,7 @@ export default class Shop extends PIXI.Container{
         rotation?: number,
         width?: number,
         height?: number       
-    ): PIXI.Sprite{
+    ):PIXI.Sprite {
         const Button:PIXI.Sprite = new PIXI.Sprite(image);
 
         Button.anchor.x = anchor_x;
@@ -262,21 +320,8 @@ export default class Shop extends PIXI.Container{
 
         console.log("Ok");
 
+        container.addChild(Button);
+
         return Button;
     };
 };
-
-/*const graphics_1 = new PIXI.Graphics();
-        graphics_1.beginFill(0xFF3300);
-        graphics_1.drawRect(Weapon_1_sprite.x, Weapon_1_sprite.y, Weapon_1_sprite.width, Weapon_1_sprite.height);
-        //graphics_1.endFill();
-
-        const graphics_2 = new PIXI.Graphics();
-        graphics_2.beginFill(0xFF3300);
-        graphics_2.drawRect(Weapon_2_sprite.x, Weapon_2_sprite.y, Weapon_2_sprite.width, Weapon_2_sprite.height);
-        //graphics_2.endFill();
-
-        const graphics_3 = new PIXI.Graphics();
-        graphics_3.beginFill(0xFF3300);
-        graphics_3.drawRect(Weapon_3_sprite.x, Weapon_3_sprite.y, Weapon_3_sprite.width, Weapon_3_sprite.height);
-        //graphics_3.endFill();*/
