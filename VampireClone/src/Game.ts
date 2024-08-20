@@ -327,5 +327,5 @@ export default class Game {
 			texture_array.push(texture);
 		});
 		return texture_array;
-	}
-}
+	};
+};

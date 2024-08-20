@@ -31,7 +31,7 @@ export default class Shop extends PIXI.Container{
             false,
         );
 
-        console.log(Shop_back_sprite.width, "  " ,Shop_back_sprite.height)
+        console.log(Shop_back_sprite.width, "  " ,Shop_back_sprite.height);
 
         const Exit_Sprite:PIXI.Sprite = this.Shop_sprite_create
         (
@@ -179,7 +179,7 @@ export default class Shop extends PIXI.Container{
             45
         );
 
-        console.log(Shop_item_3_back_sprite.x, "  ", Shop_item_3_back_sprite.y)
+        console.log(Shop_item_3_back_sprite.x, "  ", Shop_item_3_back_sprite.y);
 
         Block.addChild(Shop_back_sprite);        
 

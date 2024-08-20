@@ -21,7 +21,7 @@ export default class Enemy extends Entity {
 		this.Health_bar_image = _Health_bar_image;
 
 		this.Enemy_summon();
-	}
+	};
 
 	Enemy_summon(
 	): PIXI.Container {
@@ -45,7 +45,7 @@ export default class Enemy extends Entity {
 		console.log("Entity added");
 
 		return this;
-	}
+	};
 
 	Enemy_walck(
 		t:number
@@ -72,10 +72,6 @@ export default class Enemy extends Entity {
 			let New_xy_cor = this.besie(this.points[0], this.points[1], this.points[2], this.points[3], t)
 			super.x = New_xy_cor[0];
 			super.y = New_xy_cor[1];
-
-			/*if (t >= 1){t = 0}
-			else{t += this.Entity_speed};*/
-		  //});
 	};
 
 	private besie(
@@ -101,5 +97,5 @@ export default class Enemy extends Entity {
 			Point[1] = window.innerHeight - (Point[1] - window.innerHeight) ;
 		};
 		return Point;
-	}
-}
+	};
+};

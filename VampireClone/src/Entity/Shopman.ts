@@ -1,8 +1,6 @@
 import * as PIXI from "pixi.js";
 import Entity from "./Entity";
-//import Hero from "./Hero";
 import Shop from "../scene/Shop_Scene";
-//import Weapon from "../Weapon";
 
 export default class Shopman extends Entity{
     Sprite!:PIXI.AnimatedSprite;
@@ -38,5 +36,4 @@ export default class Shopman extends Entity{
         let Shop_: Shop = new Shop()
         return Shop_.Shop_create(_pixiApp);
     };
-
 };

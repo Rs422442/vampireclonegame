@@ -17,5 +17,5 @@ export default class Weapon{
 		effect.scale.y = 1;
         effect.visible = true;
         return effect;
-    }
+    };
 };

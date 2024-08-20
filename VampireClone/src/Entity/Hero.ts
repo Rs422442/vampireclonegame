@@ -32,7 +32,7 @@ export default class Hero extends Entity {
 
         this.container = Container;
                 
-        console.log(Hero.keys)
+        console.log(Hero.keys);
         this.Assetsloader = Assetsload;
         this.Hero_Heath_bar_image = _Hero_Heath_bar_image;
         this.Hero_Health_bar_foreground_image = _Hero_Health_bar_foreground_image; 
@@ -41,10 +41,8 @@ export default class Hero extends Entity {
         this.Hero_Weapon.Damage = 10;
         this.Hero_Weapon.Speed = 5;
         console.log(this.Hero_Weapon);
-
         
-        
-        this.Hero_summon()
+        this.Hero_summon();
     };
 
     //Escape Enter

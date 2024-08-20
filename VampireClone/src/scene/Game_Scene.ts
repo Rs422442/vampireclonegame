@@ -46,7 +46,6 @@ export default class Game_Scene extends PIXI.Container{
 
         let Health_bar_image = Game.GameLoading.getTexture("Health_bar");
         let Hero_Health_bar_foreground_image = Game.GameLoading.getTexture("Health_bar_foreground_1");
-
         
         Game_Scene.Enemy1_animations_map.set("walk", Game.createanimations(Game.enemy1_walk));
         Game_Scene.Enemy1_animations_map.set("attack", Game.createanimations(Game.enemy1_walk));
@@ -59,7 +58,6 @@ export default class Game_Scene extends PIXI.Container{
         Game_Scene.Enemy3_animations_map.set("walk", Game.createanimations(Game.enemy3_walk));
         Game_Scene.Enemy3_animations_map.set("attack", Game.createanimations(Game.enemy3_walk));
         Game_Scene.Enemy3_animations_map.set("hit", Game.createanimations(Game.enemy3_walk));
-
         
         Game_Scene.Hero_animations_map.set("onehand", Game.createanimations(Game.gg_onehand));
         Game_Scene.Hero_animations_map.set("twohand", Game.createanimations(Game.gg_twohand));
