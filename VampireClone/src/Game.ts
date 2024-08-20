@@ -171,7 +171,9 @@ export default class Game {
 			["Spear-6","./assets/weapon/spear-6.png"],
 			["Exit_cross","./assets/icons/Exit_cross.png"],
 			["Shop_back","./assets/shopblock/ShopBack.png"],
-			["Shop_item_back","./assets/shopblock/white.png"]			
+			["Shop_item_back","./assets/shopblock/white.png"],
+			["Description_back","./assets/shopblock/description_block.png"],
+			["Parameters_back","./assets/shopblock/parameters_block.png"]			
 		]);
 
 		Game.button_image_map.set("Start_new_game_buttn",Game.GameLoading.getTexture("Start_new_game_buttn"));
