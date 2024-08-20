@@ -7,6 +7,7 @@ export default class Pause extends PIXI.Container{
     static Start_sprite:PIXI.Sprite;
     static Stop_sprite:PIXI.Sprite;
     static Game_over_sprite:PIXI.Sprite;
+    static Pause_falg: boolean = false; 
     
 
     constructor(
@@ -15,8 +16,8 @@ export default class Pause extends PIXI.Container{
 
         super();
 
-        _pixiApp.ticker.stop();
         console.warn("Paused")
+        Pause.Pause_falg = true;
 
         Pause.Game_over_sprite = Menu_scene.Create_Menu_button(
             this,
@@ -76,6 +77,7 @@ export default class Pause extends PIXI.Container{
             console.warn("Start_sprite work");
             _pixiApp.ticker.start();
             console.warn("Started")
+            Pause.Pause_falg = false;
             this.removeChildren();
         });
 

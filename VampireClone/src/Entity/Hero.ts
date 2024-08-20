@@ -5,6 +5,8 @@ import Game_Scene from "../scene/Game_Scene";
 import Entity from "./Entity";
 import Weapon from "../Weapon";
 import Game from "../Game";
+import Shop from "../scene/Shop_Scene";
+import Pause from "../scene/Pause_Scene";
 
 
 export default class Hero extends Entity {
@@ -30,7 +32,7 @@ export default class Hero extends Entity {
 
         this.container = Container;
                 
-        console.log(Hero.keys)
+        console.log(Hero.keys);
         this.Assetsloader = Assetsload;
         this.Hero_Heath_bar_image = _Hero_Heath_bar_image;
         this.Hero_Health_bar_foreground_image = _Hero_Health_bar_foreground_image; 
@@ -39,10 +41,8 @@ export default class Hero extends Entity {
         this.Hero_Weapon.Damage = 10;
         this.Hero_Weapon.Speed = 5;
         console.log(this.Hero_Weapon);
-
         
-        
-        this.Hero_summon()
+        this.Hero_summon();
     };
 
     //Escape Enter
@@ -158,21 +158,28 @@ export default class Hero extends Entity {
     };
 
     Hero_attack(){
-        document.addEventListener('click', this.onclick);
+        document.addEventListener('click', this.onclick);        
     };
 
     onclick(e){
-        console.log("click");
-        let effect_sprite: PIXI.AnimatedSprite = this.Hero_Weapon.spawn_effect()
-        this.container.addChild(effect_sprite);
-        effect_sprite.x = this.x;
-        effect_sprite.y = this.y;
-        effect_sprite.play();
-        if(this.Sprite.scale.x >= 0){
-            effect_sprite.x += this.Hero_Weapon.Speed;
-        }
-        else{
-            effect_sprite.x -= this.Hero_Weapon.Speed;
+        if (!Shop.Shop_flag && !Pause.Pause_falg){
+            console.log("click");
+            let effect_textures:PIXI.Texture<PIXI.Resource>[];
+                if (Game_Scene.Weapon_animations_map.get("Onehand") != undefined)
+                    {effect_textures = Game_Scene.Weapon_animations_map.get("Onehand")}
+                else{effect_textures = [PIXI.Texture.EMPTY]};
+            let effect_sprite: PIXI.AnimatedSprite = this.Hero_Weapon.spawn_effect(effect_textures);
+            effect_sprite.x = this.x;
+            effect_sprite.y = this.y;
+            effect_sprite.play();
+            effect_sprite.animationSpeed = 0.15;
+            this.container.addChild(effect_sprite);
+            if(this.Sprite.scale.x >= 0){
+                effect_sprite.x += this.Hero_Weapon.Speed;
+            }
+            else{
+                effect_sprite.x -= this.Hero_Weapon.Speed;
+            };
         };
     };
 

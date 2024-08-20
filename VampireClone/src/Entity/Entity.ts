@@ -57,5 +57,5 @@ export default class Entity extends PIXI.Container{
         Entity_health_bar_foreground_sprite.height = height;
 
         return Entity_health_bar_foreground_sprite;
-    }
+    };
 };
