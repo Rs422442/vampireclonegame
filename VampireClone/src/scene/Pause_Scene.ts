@@ -7,7 +7,7 @@ export default class Pause extends PIXI.Container{
     static Start_sprite:PIXI.Sprite;
     static Stop_sprite:PIXI.Sprite;
     static Game_over_sprite:PIXI.Sprite;
-    static Pause_falg: boolean = false; 
+    static Pause_flag: boolean = false; 
     
 
     constructor(

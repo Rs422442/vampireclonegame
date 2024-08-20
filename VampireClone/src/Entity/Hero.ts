@@ -17,7 +17,7 @@ export default class Hero extends Entity {
     walck_flag:boolean = false;
     static keys: Map<string, boolean> = new Map<string, boolean>();
     //static animations_map: Map<string, PIXI.Texture<PIXI.Resource>[]>;
-    Hero_Weapon: Weapon = new Weapon();
+    Hero_Weapon: Weapon = new Weapon(10, 10, 0, 50, Game_Scene.Weapon_animations_map.get("Onehand"),);
     container: PIXI.Container;
 
     constructor(
@@ -37,9 +37,6 @@ export default class Hero extends Entity {
         this.Hero_Heath_bar_image = _Hero_Heath_bar_image;
         this.Hero_Health_bar_foreground_image = _Hero_Health_bar_foreground_image; 
 
-        this.Hero_Weapon.Animations = Game.createanimations(Game.onehand)
-        this.Hero_Weapon.Damage = 10;
-        this.Hero_Weapon.Speed = 5;
         console.log(this.Hero_Weapon);
         
         this.Hero_summon();
@@ -161,18 +158,20 @@ export default class Hero extends Entity {
         document.addEventListener('click', this.onclick);        
     };
 
-    onclick(e){
-        if (!Shop.Shop_flag && !Pause.Pause_falg){
+    onclick(){
+        if (!Shop.Shop_flag && !Pause.Pause_flag){
             console.log("click");
-            let effect_textures:PIXI.Texture<PIXI.Resource>[];
-                if (Game_Scene.Weapon_animations_map.get("Onehand") != undefined)
-                    {effect_textures = Game_Scene.Weapon_animations_map.get("Onehand")}
-                else{effect_textures = [PIXI.Texture.EMPTY]};
-            let effect_sprite: PIXI.AnimatedSprite = this.Hero_Weapon.spawn_effect(effect_textures);
-            effect_sprite.x = this.x;
-            effect_sprite.y = this.y;
-            effect_sprite.play();
-            effect_sprite.animationSpeed = 0.15;
+            let effect_sprite: PIXI.AnimatedSprite = this.Hero_Weapon.spawn_effect
+            (
+                0.5,
+                0.5,
+                1,
+                1,
+                this.x,
+                this.y,
+                0.15
+            );
+            
             this.container.addChild(effect_sprite);
             if(this.Sprite.scale.x >= 0){
                 effect_sprite.x += this.Hero_Weapon.Speed;
