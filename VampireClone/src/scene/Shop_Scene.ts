@@ -27,12 +27,25 @@ export default class Shop extends PIXI.Container{
             0.5,
             1,
             1,
-            window.innerWidth/2,
-            window.innerHeight/2,
+            0,
+            0,
             false,
             false,
-            Block.width,
-            Block.height
+        );
+
+        console.log(Shop_back_sprite.width, "  " ,Shop_back_sprite.height)
+
+        const Exit_Sprite:PIXI.Sprite = this.Shop_sprite_create
+        (
+            Game.GameLoading.getTexture("Exit_cross"),
+            0.5,
+            0.5,
+            0.25,
+            0.25,
+            Shop_back_sprite.width/2 - 20 - 6,
+            - Shop_back_sprite.height/2 + 20 + 6,
+            true,
+            true
         );
 
         const Shop_item_1_back_sprite:PIXI.Sprite = this.Shop_sprite_create
@@ -42,8 +55,8 @@ export default class Shop extends PIXI.Container{
             0.5,
             1,
             1,
-            Shop_back_sprite.width - 30,
-            Shop_back_sprite.height + 30,
+            - Shop_back_sprite.width/2 + 38 + 6,
+            - Shop_back_sprite.height/2 + 38 + Exit_Sprite.height + 10,
             false,
             false
         );
@@ -55,8 +68,8 @@ export default class Shop extends PIXI.Container{
             0.5,
             1,
             1,
-            Shop_back_sprite.width - 30,
-            Shop_back_sprite.height + 30 + Shop_item_1_back_sprite.height + 5,
+            - Shop_back_sprite.width/2 + 38 + 6,
+            - Shop_back_sprite.height/2 + 38 + Exit_Sprite.height + 10 + Shop_item_1_back_sprite.height + 10,
             false,
             false
         );
@@ -68,24 +81,13 @@ export default class Shop extends PIXI.Container{
             0.5,
             1,
             1,
-            Shop_back_sprite.width - 30,
-            Shop_back_sprite.height + 30 + Shop_item_1_back_sprite.height + Shop_item_2_back_sprite.height + 10,
+            - Shop_back_sprite.width/2 + 38 + 6,
+            - Shop_back_sprite.height/2 + 38 + Exit_Sprite.height + 10 + Shop_item_1_back_sprite.height + 10 + Shop_item_2_back_sprite.height + 10,
             false,
             false
         );
 
-        const Exit_Sprite:PIXI.Sprite = this.Shop_sprite_create
-        (
-            Game.GameLoading.getTexture("Exit_cross"),
-            0.5,
-            0.5,
-            0.2,
-            0.2,
-            Shop_back_sprite.width + 30,
-            Shop_back_sprite.height + 10,
-            true,
-            true
-        );
+        
 
         const Weapon_1_sprite:PIXI.Sprite = this.Shop_sprite_create
         (
@@ -94,10 +96,11 @@ export default class Shop extends PIXI.Container{
             0.5,
             1.5,
             1.5,
-            Shop_item_1_back_sprite.x,
-            Shop_item_1_back_sprite.y,
+            0,
+            0,
             true,
-            true
+            true,
+            45
         );
 
         const Weapon_2_sprite:PIXI.Sprite = this.Shop_sprite_create
@@ -107,10 +110,11 @@ export default class Shop extends PIXI.Container{
             0.5,
             1.5,
             1.5,
-            Shop_item_2_back_sprite.x,
-            Shop_item_2_back_sprite.y,
+            0,
+            0,
             true,
-            true
+            true,
+            45
         );
 
         const Weapon_3_sprite:PIXI.Sprite = this.Shop_sprite_create
@@ -120,22 +124,23 @@ export default class Shop extends PIXI.Container{
             0.5,
             1.5,
             1.5,
-            Shop_item_3_back_sprite.x,
-            Shop_item_3_back_sprite.y,
+            0,
+            0,
             true,
-            true
+            true,
+            45
         );
 
-        Shop_item_1_back_sprite.addChild(Weapon_1_sprite);
-        Shop_item_2_back_sprite.addChild(Weapon_2_sprite);
-        Shop_item_3_back_sprite.addChild(Weapon_3_sprite);        
+        Block.addChild(Shop_back_sprite);        
 
         Shop_back_sprite.addChild(Exit_Sprite);
         Shop_back_sprite.addChild(Shop_item_1_back_sprite);
         Shop_back_sprite.addChild(Shop_item_2_back_sprite);
         Shop_back_sprite.addChild(Shop_item_3_back_sprite);        
 
-        Block.addChild(Shop_back_sprite);
+        Shop_item_1_back_sprite.addChild(Weapon_1_sprite);
+        Shop_item_2_back_sprite.addChild(Weapon_2_sprite);
+        Shop_item_3_back_sprite.addChild(Weapon_3_sprite);
 
         Exit_Sprite.on('click',()=>{
             this.Exit_shop(Block);
@@ -173,21 +178,26 @@ export default class Shop extends PIXI.Container{
         y_cor: number,
         interactive: boolean,
         buttonMode: boolean,
-        width?:number,
-        height?:number
+        rotation?: number,
+        width?: number,
+        height?: number       
     ): PIXI.Sprite{
         const Button:PIXI.Sprite = new PIXI.Sprite(image);
 
         Button.anchor.x = anchor_x;
 		Button.anchor.y = anchor_y;
 
+        Button.scale.x = scale_x;
+		Button.scale.y = scale_y;
+
+        if (rotation != undefined ){
+            Button.rotation = rotation
+        }; 
+
         if (width != undefined && height != undefined){
             Button.width = width;
             Button.height = height;
-        } else {
-            Button.scale.x = scale_x;
-		    Button.scale.y = scale_y;
-        };        
+        };       
 
         Button.interactive = interactive;
         Button.buttonMode = buttonMode;

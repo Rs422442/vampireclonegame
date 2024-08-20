@@ -170,7 +170,7 @@ export default class Game {
 			["Spear-5","./assets/weapon/spear-5.png"],
 			["Spear-6","./assets/weapon/spear-6.png"],
 			["Exit_cross","./assets/icons/Exit_cross.png"],
-			["Shop_back","./assets/shopblock/darkgray.png"],
+			["Shop_back","./assets/shopblock/ShopBack.png"],
 			["Shop_item_back","./assets/shopblock/white.png"]			
 		]);
 
